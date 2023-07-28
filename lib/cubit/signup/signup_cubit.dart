@@ -18,11 +18,24 @@ class SignUpCubit extends Cubit<SignUpState> {
         email: email,
         isValid: Formz.validate([
           email,
+          state.name,
           state.password,
           state.confirmedPassword,
         ]),
       ),
     );
+  }
+
+  void nameChanged(String value) {
+    final name = Name.dirty(value);
+    emit(state.copyWith(
+        name: name,
+        isValid: Formz.validate([
+          state.email,
+          name,
+          state.password,
+          state.confirmedPassword,
+        ])));
   }
 
   void passwordChanged(String value) {
@@ -37,6 +50,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         confirmedPassword: confirmedPassword,
         isValid: Formz.validate([
           state.email,
+          state.name,
           password,
           confirmedPassword,
         ]),
@@ -54,6 +68,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         confirmedPassword: confirmedPassword,
         isValid: Formz.validate([
           state.email,
+          state.name,
           state.password,
           confirmedPassword,
         ]),
@@ -68,6 +83,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       await _authenticationRepository.singUp(
         email: state.email.value,
         password: state.password.value,
+        name: state.name.value,
       );
       emit(state.copyWith(status: FormzSubmissionStatus.success));
     } on SignUpWithEmailAndPasswordFailure catch (e) {
@@ -81,4 +97,6 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(state.copyWith(status: FormzSubmissionStatus.failure));
     }
   }
+
+
 }

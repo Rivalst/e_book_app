@@ -2,7 +2,7 @@ import 'package:formz/formz.dart';
 
 enum EmailValidationError { invalid }
 
-/// Form input for a confirmed password input.
+/// Form input for a confirmed email input.
 class Email
     extends FormzInput<String, EmailValidationError> {
   const Email.pure() : super.pure('');

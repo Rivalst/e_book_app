@@ -48,8 +48,7 @@ class SingUpForm extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             const Text(
               'Log in',
@@ -65,13 +64,14 @@ class SingUpForm extends StatelessWidget {
             ),
             const SizedBox(height: 30.0),
             _EmailInput(),
+            const SizedBox(height: 5.0),
+            _NameInput(),
+            const SizedBox(height: 5.0),
             _PasswordInput(),
+            const SizedBox(height: 5.0),
             _ConfirmPasswordInput(),
-            Expanded(
-                child: Align(
-              alignment: Alignment.bottomCenter,
-              child: _SignUpButton(),
-            ))
+            const SizedBox(height: 5.0),
+            _SignUpButton(),
           ],
         ),
       ),
@@ -98,6 +98,27 @@ class _EmailInput extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class _NameInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignUpCubit, SignUpState>(
+        buildWhen: (previous, current) => previous.name != current.name,
+        builder: (context, state) {
+          return TextField(
+            key: const Key('singUpForm_nameInput_textField'),
+            onChanged: (name) => context.read<SignUpCubit>().nameChanged(name),
+            keyboardType: TextInputType.name,
+            decoration: InputDecoration(
+              labelText: 'Your name',
+              helperText: '',
+              errorText:
+                  state.name.displayError != null ? 'invalid email' : null,
+            ),
+          );
+        });
   }
 }
 
@@ -169,7 +190,9 @@ class _SignUpButton extends StatelessWidget {
                     backgroundColor: const Color(0xFFFFD600),
                   ),
                   onPressed: state.isValid
-                      ? () => context.read<SignUpCubit>().signUpFormSubmitted()
+                      ? () {
+                          context.read<SignUpCubit>().signUpFormSubmitted();
+                        }
                       : null,
                   child: const Text('SIGN UP'),
                 ),
