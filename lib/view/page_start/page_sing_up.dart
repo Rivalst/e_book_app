@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../../data/data_theme/color_theme.dart';
+import '../utilit_widgets/color_theme.dart';
 
 class SingUpPage extends StatelessWidget {
   const SingUpPage({Key? key}) : super(key: key);
@@ -13,24 +13,22 @@ class SingUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColorThemeBraunBlack theme = AppColorThemeBraunBlack();
     return Scaffold(
-      appBar: AppBar(backgroundColor: theme.whiteColorBackground),
+      appBar: AppBar(backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: BlocProvider<SignUpCubit>(
           create: (_) => SignUpCubit(context.read<AuthenticationRepository>()),
-          child: SingUpForm(theme: theme),
+          child: const SingUpForm(),
         ),
       ),
-      backgroundColor: theme.whiteColorBackground,
+      backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground,
     );
   }
 }
 
 class SingUpForm extends StatelessWidget {
-  const SingUpForm({this.theme, Key? key}) : super(key: key);
-  final AppColorThemeBraunBlack? theme;
+  const SingUpForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +49,7 @@ class SingUpForm extends StatelessWidget {
         child: ListView(
           children: [
             const Text(
-              'Log in',
+              'Sign Up',
               style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 10.0),
@@ -60,7 +58,7 @@ class SingUpForm extends StatelessWidget {
               style: TextStyle(
                   fontSize: 17.0,
                   fontWeight: FontWeight.w400,
-                  color: theme!.blackColor40),
+                  color: AppColorThemeBraunBlack.of(context).blackColor40),
             ),
             const SizedBox(height: 30.0),
             _EmailInput(),
@@ -71,7 +69,13 @@ class SingUpForm extends StatelessWidget {
             const SizedBox(height: 5.0),
             _ConfirmPasswordInput(),
             const SizedBox(height: 5.0),
-            _SignUpButton(),
+            const Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _SignUpButton(),
+              ],
+            )),
           ],
         ),
       ),
@@ -90,7 +94,8 @@ class _EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
+            labelText: 'Your email',
+            icon: const Icon(Icons.email),
             helperText: '',
             errorText:
                 state.email.displayError != null ? 'invalid email' : null,
@@ -113,9 +118,10 @@ class _NameInput extends StatelessWidget {
             keyboardType: TextInputType.name,
             decoration: InputDecoration(
               labelText: 'Your name',
+              icon: const Icon(Icons.person),
               helperText: '',
               errorText:
-                  state.name.displayError != null ? 'invalid email' : null,
+                  state.name.displayError != null ? 'invalid name' : null,
             ),
           );
         });
@@ -135,6 +141,7 @@ class _PasswordInput extends StatelessWidget {
           obscureText: true,
           decoration: InputDecoration(
             labelText: 'password',
+            icon: const Icon(Icons.password),
             helperText: '',
             errorText:
                 state.password.displayError != null ? 'invalid password' : null,
@@ -161,6 +168,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
           obscureText: true,
           decoration: InputDecoration(
             labelText: 'confirm password',
+            icon: const Icon(Icons.lock),
             helperText: '',
             errorText: state.confirmedPassword.displayError != null
                 ? 'passwords do not match'
@@ -173,12 +181,17 @@ class _ConfirmPasswordInput extends StatelessWidget {
 }
 
 class _SignUpButton extends StatelessWidget {
+  const _SignUpButton({super.key});
+
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(
       builder: (context, state) {
         return state.status.isInProgress
-            ? const CircularProgressIndicator()
+            ? CircularProgressIndicator(
+                color: AppColorThemeBraunBlack.of(context).lightBraunColor100,
+              )
             : SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
@@ -187,14 +200,20 @@ class _SignUpButton extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    backgroundColor: const Color(0xFFFFD600),
+                    backgroundColor:
+                        AppColorThemeBraunBlack.of(context).lightBraunColor100,
                   ),
                   onPressed: state.isValid
                       ? () {
                           context.read<SignUpCubit>().signUpFormSubmitted();
                         }
                       : null,
-                  child: const Text('SIGN UP'),
+                  child: Text(
+                    'SIGN UP',
+                    style: TextStyle(
+                        color: AppColorThemeBraunBlack.of(context)
+                            .lightBraunColor10),
+                  ),
                 ),
               );
       },

@@ -1,4 +1,3 @@
-import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 
 enum ConfirmedPasswordValidationError { invalid }

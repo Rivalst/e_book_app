@@ -1,4 +1,4 @@
-import 'package:e_book_app/data/data_theme/color_theme.dart';
+import 'package:e_book_app/view/utilit_widgets/color_theme.dart';
 import 'package:e_book_app/view/page_start/page_login_in.dart';
 import 'package:e_book_app/view/page_start/page_sing_up.dart';
 import 'package:flutter/material.dart';

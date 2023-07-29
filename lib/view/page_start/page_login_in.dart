@@ -1,5 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:e_book_app/data/data_theme/color_theme.dart';
+import 'package:e_book_app/view/utilit_widgets/color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,27 +14,25 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColorThemeBraunBlack theme = AppColorThemeBraunBlack();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(backgroundColor: theme.whiteColorBackground),
+        appBar: AppBar(backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: BlocProvider<LoginCubit>(
             create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
-            child: LoginForm(theme: theme),
+            child: const LoginForm(),
           ),
         ),
-        backgroundColor: theme.whiteColorBackground,
+        backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground,
       ),
     );
   }
 }
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({this.theme, Key? key}) : super(key: key);
-  final AppColorThemeBraunBlack? theme;
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,18 +61,18 @@ class LoginForm extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 17.0,
                     fontWeight: FontWeight.w400,
-                    color: theme!.blackColor40),
+                    color: AppColorThemeBraunBlack.of(context).blackColor40),
               ),
               const SizedBox(height: 30.0),
               const _EmailInput(),
               const _PasswordInput(),
-              Expanded(
+              const Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    _GoogleLoginButton(theme: theme),
-                    const SizedBox(height: 10.0),
-                    const _LoginButton(),
+                    _GoogleLoginButton(),
+                    SizedBox(height: 10.0),
+                    _LoginButton(),
                   ],
                 ),
               )
@@ -100,6 +98,7 @@ class _EmailInput extends StatelessWidget {
             decoration: InputDecoration(
               labelText: 'Email address',
               helperText: '',
+              icon: const Icon(Icons.email),
               errorText:
                   state.email.displayError != null ? 'invalid email' : null,
             ),
@@ -125,6 +124,7 @@ class _PasswordInput extends StatelessWidget {
             decoration: InputDecoration(
               labelText: 'Password',
               helperText: '',
+              icon: const Icon(Icons.lock),
               errorText: state.password.displayError != null
                   ? 'invalid password'
                   : null,
@@ -135,8 +135,7 @@ class _PasswordInput extends StatelessWidget {
 }
 
 class _GoogleLoginButton extends StatelessWidget {
-  const _GoogleLoginButton({this.theme, Key? key}) : super(key: key);
-  final AppColorThemeBraunBlack? theme;
+  const _GoogleLoginButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +152,8 @@ class _GoogleLoginButton extends StatelessWidget {
           ),
           Text(
             'SIGN IN WITH GOOGLE',
-            style: TextStyle(color: theme!.blackColor40),
+            style: TextStyle(
+                color: AppColorThemeBraunBlack.of(context).blackColor40),
           ),
         ],
       ),
@@ -168,7 +168,9 @@ class _LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
       return state.status.isInProgress
-          ? const CircularProgressIndicator()
+          ? CircularProgressIndicator(
+              color: AppColorThemeBraunBlack.of(context).lightBraunColor100,
+            )
           : SizedBox(
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
@@ -177,7 +179,8 @@ class _LoginButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  backgroundColor: const Color(0xFFFFD600),
+                  backgroundColor:
+                      AppColorThemeBraunBlack.of(context).lightBraunColor100,
                 ),
                 onPressed: state.isValid
                     ? () {
@@ -189,7 +192,10 @@ class _LoginButton extends StatelessWidget {
                             .then((_) => Navigator.of(context).pop());
                       }
                     : null,
-                child: const Text('LOGIN'),
+                child: Text('LOGIN',
+                    style: TextStyle(
+                        color: AppColorThemeBraunBlack.of(context)
+                            .lightBraunColor10)),
               ),
             );
     });
