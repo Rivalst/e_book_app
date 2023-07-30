@@ -1,8 +1,9 @@
-import 'package:e_book_app/view/utilit_widgets/color_theme.dart';
-import 'package:e_book_app/view/page_start/page_login_in.dart';
-import 'package:e_book_app/view/page_start/page_sing_up.dart';
+import 'package:e_book_app/config/color_theme.dart';
+import 'package:e_book_app/view/page_start/login_in_page.dart';
+import 'package:e_book_app/view/page_start/sing_up_page.dart';
 import 'package:flutter/material.dart';
 
+/// This is a page for [unauthenticated] users where they can log in or sing up
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({Key? key}) : super(key: key);
 
@@ -10,7 +11,6 @@ class OnBoardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppColorThemeBraunBlack theme = AppColorThemeBraunBlack();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -63,13 +63,13 @@ class OnBoardingPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const SingUpPage())),
-                      backgroundColor: theme.lightBraunColor100,
+                      backgroundColor: AppColorThemeBraunBlack.of(context).lightBraunColor100,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       child: Text(
                         'Sing Up',
                         style: TextStyle(
-                            color: theme.lightBraunColor10,
+                            color: AppColorThemeBraunBlack.of(context).lightBraunColor10,
                             fontWeight: FontWeight.bold,
                             fontSize: 19.0),
                       ),
@@ -83,14 +83,14 @@ class OnBoardingPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const LoginPage())),
-                      backgroundColor: theme.lightBraunColor10,
+                      backgroundColor: AppColorThemeBraunBlack.of(context).lightBraunColor10,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: theme.lightBraunColor100)),
+                          side: BorderSide(color: AppColorThemeBraunBlack.of(context).lightBraunColor100)),
                       child: Text(
                         'Log In',
                         style: TextStyle(
-                            color: theme.lightBraunColor100,
+                            color: AppColorThemeBraunBlack.of(context).lightBraunColor100,
                             fontWeight: FontWeight.bold,
                             fontSize: 19.0),
                       ),
@@ -102,7 +102,7 @@ class OnBoardingPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: theme.whiteColorBackground,
+      backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground,
     );
   }
 }

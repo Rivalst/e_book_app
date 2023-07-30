@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'color_pallet_widget.dart';
+import '../view/utils_widgets/color_pallet_widget.dart';
 
-// abstract class for get color app
+/// Abstract class for get color app
 abstract class AppColorTheme {
   // ============== Main Braun Colors =================
   Color get lightBraunColor100;
@@ -38,6 +38,8 @@ abstract class AppColorTheme {
   Color get whiteColorBackground;
 }
 
+
+/// Pallet with light Braun color
 class AppPalletBraun {
   static const Color lightBraunColor100 = Color(0xFFC68E17);
   static const Color lightBraunColor80 = Color(0xFFD2A546);
@@ -48,6 +50,7 @@ class AppPalletBraun {
   static const Color lightBraunColor10 = Color(0xFFF4EAD4);
 }
 
+/// Pallet with Black Color
 class AppPalletBlack {
   static const Color blackColor100 = Color(0xFF000000);
   static const Color blackColor80 = Color(0xFF242424);
@@ -58,6 +61,7 @@ class AppPalletBlack {
   static const Color blackColor10 = Color(0xFFD8D8D8);
 }
 
+/// Main Pallet that used in custom [InheritedWidget]
 class AppColorThemeBraunBlack implements AppColorTheme {
   static AppColorThemeBraunBlack of(BuildContext context) {
     return context

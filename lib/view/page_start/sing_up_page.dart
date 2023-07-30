@@ -1,10 +1,10 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:e_book_app/cubit/signup/signup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../utilit_widgets/color_theme.dart';
+import '../../config/color_theme.dart';
+import '../../controller/cubit/signup/signup_cubit.dart';
 
 class SingUpPage extends StatelessWidget {
   const SingUpPage({Key? key}) : super(key: key);

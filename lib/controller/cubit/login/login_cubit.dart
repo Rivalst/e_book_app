@@ -6,6 +6,10 @@ import 'package:form_inputs/form_inputs.dart';
 
 part 'login_state.dart';
 
+/// A Cubit that manages the state and business logic for the login process.
+///
+/// The [LoginCubit] is responsible for handling email and password validation,
+/// login with credentials (email and password), and login with Google.
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._authenticationRepository) : super(const LoginState());
 

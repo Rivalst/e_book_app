@@ -6,6 +6,10 @@ import 'package:formz/formz.dart';
 
 part 'signup_state.dart';
 
+/// A Cubit that manages the state and business logic for the signup process.
+///
+/// The [SignUpCubit] is responsible for handling email, password
+/// and name validation
 class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit(this._authenticationRepository) : super(const SignUpState());
 

@@ -1,6 +1,9 @@
-import 'package:e_book_app/view/utilit_widgets/color_theme.dart';
+import 'package:e_book_app/config/color_theme.dart';
 import 'package:flutter/material.dart';
 
+/// Widget that provide color pallet in widget tree
+///
+/// Example use => AppColorThemeBraunBlack.of(context)
 class ColorPaletteInherited extends InheritedWidget {
   final AppColorThemeBraunBlack palette;
 

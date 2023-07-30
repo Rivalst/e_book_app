@@ -1,11 +1,11 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:e_book_app/view/utilit_widgets/color_theme.dart';
+import 'package:e_book_app/config/color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 
-import '../../cubit/login/login_cubit.dart';
+import '../../controller/cubit/login/login_cubit.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);

@@ -9,6 +9,9 @@ part 'app_event.dart';
 
 part 'app_state.dart';
 
+/// BLoC that provide control user is authenticated or unauthenticated
+/// Also provided method for user change[_onUserChanged] and
+/// user log out[_onLogoutRequested]
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({required AuthenticationRepository authenticationRepository})
       : _authenticationRepository = authenticationRepository,

@@ -1,13 +1,17 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:e_book_app/view/utilit_widgets/color_theme.dart';
-import 'package:e_book_app/routes/routes.dart';
-import 'package:e_book_app/view/utilit_widgets/color_pallet_widget.dart';
+import 'package:e_book_app/config/color_theme.dart';
+import 'package:e_book_app/config/routes/routes.dart';
+import 'package:e_book_app/view/utils_widgets/color_pallet_widget.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/app_bloc/app_bloc.dart';
+import '../controller/bloc/app_bloc/app_bloc.dart';
 
+
+/// It's widget sets up the application's state management using
+/// [RepositoryProvider] and [BlocProvider]. The [AuthenticationRepository] is
+/// provided to the entire widget tree via [RepositoryProvider.value]
 class MyApp extends StatelessWidget {
   const MyApp(
       {required AuthenticationRepository authenticationRepository, super.key})
@@ -28,6 +32,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/// This widget for settings [ThemeData] and also show page depending user is
+/// [authenticated] or [unauthenticated]
+///
+/// This logic for page controlled FlowBuilder with [onGenerateAppViewPages] routes
 class AppView extends StatelessWidget {
   const AppView({super.key});
 
