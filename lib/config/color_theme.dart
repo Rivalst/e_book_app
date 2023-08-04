@@ -38,7 +38,6 @@ abstract class AppColorTheme {
   Color get whiteColorBackground;
 }
 
-
 /// Pallet with light Braun color
 class AppPalletBraun {
   static const Color lightBraunColor100 = Color(0xFFC68E17);
@@ -64,9 +63,12 @@ class AppPalletBlack {
 /// Main Pallet that used in custom [InheritedWidget]
 class AppColorThemeBraunBlack implements AppColorTheme {
   static AppColorThemeBraunBlack of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<ColorPaletteInherited>()!
-        .palette;
+    final inheritedWidget =
+    context.dependOnInheritedWidgetOfExactType<ColorPaletteInherited>();
+    if (inheritedWidget == null) {
+      throw Exception("ColorPaletteInherited not found in the widget tree");
+    }
+    return inheritedWidget.palette;
   }
 
   @override

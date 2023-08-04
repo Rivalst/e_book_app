@@ -200,7 +200,8 @@ class AuthenticationRepository {
       if (userUID != null){
         await _firebaseFirestore.collection('users').doc(userUID).set({
           'name': name,
-          'email': email
+          'email': email,
+          'uid': userUID
         });
       } else {
         print('It null');

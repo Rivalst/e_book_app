@@ -1,11 +1,10 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:e_book_app/config/color_theme.dart';
+import 'package:e_book_app/controller/cubit/login/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-
-import '../../controller/cubit/login/login_cubit.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,19 +13,18 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: AppBar(backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: BlocProvider<LoginCubit>(
-            create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
-            child: const LoginForm(),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor:
+              AppColorThemeBraunBlack.of(context).whiteColorBackground),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: BlocProvider<LoginCubit>(
+          create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
+          child: const LoginForm(),
         ),
-        backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground,
       ),
+      backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground,
     );
   }
 }
@@ -38,18 +36,19 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
-          if (state.status.isFailure) {
+          if (state.status.isSuccess) {
+            Navigator.of(context).pop();
+          } else if (state.status.isFailure) {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(
                   content:
-                      Text(state.errorMessage ?? 'Authentication Failuder')));
+                      Text(state.errorMessage ?? 'Authentication Failure')));
           }
         },
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
             children: [
               const Text(
                 'Log in',
@@ -66,16 +65,9 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 30.0),
               const _EmailInput(),
               const _PasswordInput(),
-              const Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    _GoogleLoginButton(),
-                    SizedBox(height: 10.0),
-                    _LoginButton(),
-                  ],
-                ),
-              )
+              const _GoogleLoginButton(),
+              const SizedBox(height: 10.0),
+              const _LoginButton()
             ],
           ),
         ));
@@ -184,12 +176,7 @@ class _LoginButton extends StatelessWidget {
                 ),
                 onPressed: state.isValid
                     ? () {
-                        context
-                            .read<LoginCubit>()
-                            .logInWithCredentials()
-
-                            /// .then used for bug when after log in user can't redirected to home page
-                            .then((_) => Navigator.of(context).pop());
+                        context.read<LoginCubit>().logInWithCredentials();
                       }
                     : null,
                 child: Text('LOGIN',

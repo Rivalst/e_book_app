@@ -1,20 +1,25 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:e_book_app/config/color_theme.dart';
+import 'package:e_book_app/controller/cubit/signup/signup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-
-import '../../config/color_theme.dart';
-import '../../controller/cubit/signup/signup_cubit.dart';
 
 class SingUpPage extends StatelessWidget {
   const SingUpPage({Key? key}) : super(key: key);
 
   static Page<void> page() => const MaterialPage<void>(child: SingUpPage());
 
+  static Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => const SingUpPage());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground),
+      appBar: AppBar(
+          backgroundColor:
+              AppColorThemeBraunBlack.of(context).whiteColorBackground),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: BlocProvider<SignUpCubit>(
@@ -47,7 +52,7 @@ class SingUpForm extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
         child: ListView(
-          children: [
+          children: <Widget>[
             const Text(
               'Sign Up',
               style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w500),
@@ -69,13 +74,7 @@ class SingUpForm extends StatelessWidget {
             const SizedBox(height: 5.0),
             _ConfirmPasswordInput(),
             const SizedBox(height: 5.0),
-            const Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _SignUpButton(),
-              ],
-            )),
+            _SignUpButton(),
           ],
         ),
       ),
@@ -181,9 +180,6 @@ class _ConfirmPasswordInput extends StatelessWidget {
 }
 
 class _SignUpButton extends StatelessWidget {
-  const _SignUpButton({super.key});
-
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(

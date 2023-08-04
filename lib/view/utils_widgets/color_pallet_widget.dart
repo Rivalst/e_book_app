@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 /// Widget that provide color pallet in widget tree
 ///
 /// Example use => AppColorThemeBraunBlack.of(context)
+@immutable
 class ColorPaletteInherited extends InheritedWidget {
   final AppColorThemeBraunBlack palette;
 
-  ColorPaletteInherited({
+  const ColorPaletteInherited({
     required this.palette,
     required Widget child,
+    super.key,
   }) : super(child: child);
 
   @override

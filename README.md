@@ -22,7 +22,7 @@ The design is inspired by Behance:
     - Top Authors
 - Discover
     - Search
-    - Categories
+    - Categories~~~~
     - Popular
 - Library
     - Your Books
