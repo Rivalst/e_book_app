@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-Hello! This app provides you with a world of books.
+Hello! 👋 This app provides you with a world of books.
 
 The books are fetched from the open-source API:
 - [Open Library](https://openlibrary.org/developers/api)
@@ -34,8 +34,6 @@ The design is inspired by Behance:
     - Info
     - Help Center
     - Profile chang
-
-## ============== PROVIDE FOR COLOR PALLET ==============
 
 ## ============== PROVIDE FOR AUTHENTICATION ==============
 
