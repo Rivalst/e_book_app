@@ -14,6 +14,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           backgroundColor:
               AppColorThemeBraunBlack.of(context).whiteColorBackground),
@@ -48,7 +49,7 @@ class LoginForm extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-          child: ListView(
+          child: Column(
             children: [
               const Text(
                 'Log in',
@@ -65,9 +66,15 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 30.0),
               const _EmailInput(),
               const _PasswordInput(),
-              const _GoogleLoginButton(),
-              const SizedBox(height: 10.0),
-              const _LoginButton()
+              const Expanded(child:
+                  Column(
+                    children: [
+                      _GoogleLoginButton(),
+                      SizedBox(height: 10.0),
+                      _LoginButton()
+                    ],
+                  )
+              )
             ],
           ),
         ));

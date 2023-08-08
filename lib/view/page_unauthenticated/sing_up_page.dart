@@ -17,6 +17,7 @@ class SingUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           backgroundColor:
               AppColorThemeBraunBlack.of(context).whiteColorBackground),
@@ -51,7 +52,7 @@ class SingUpForm extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-        child: ListView(
+        child: Column(
           children: <Widget>[
             const Text(
               'Sign Up',
@@ -74,7 +75,12 @@ class SingUpForm extends StatelessWidget {
             const SizedBox(height: 5.0),
             _ConfirmPasswordInput(),
             const SizedBox(height: 5.0),
-            _SignUpButton(),
+            Expanded(
+                child: Column(
+              children: [
+                _SignUpButton(),
+              ],
+            )),
           ],
         ),
       ),

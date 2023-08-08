@@ -1,0 +1,11 @@
+{
+  "@@locale": "uk",
+  "profile":  "Профіль",
+  "library": "Бібліотека",
+  "discover": "Пошук",
+  "home": "Головна",
+  "language": "Мова",
+  "england": "Англійська",
+  "ukrainian": "Українська",
+  "change_language": "Виберіть мову"
+}

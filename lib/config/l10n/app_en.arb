@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "profile":  "Profile",
+  "library": "Library",
+  "discover": "Discover",
+  "home": "Home",
+  "language": "Language",
+  "english": "English",
+  "ukrainian": "Ukrainian",
+  "change_language": "Select language"
+}
