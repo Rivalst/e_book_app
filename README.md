@@ -22,7 +22,7 @@ The design is inspired by Behance:
     - Top Authors
 - Discover
     - Search
-    - Categories~~~~
+    - Categories
     - Popular
 - Library
     - Your Books
@@ -31,9 +31,8 @@ The design is inspired by Behance:
     - Finished
 - Profile
     - Language
-    - Info
-    - Help Center
-    - Profile chang
+    - Info profile
+    - Profile change
 
 ## ============== PROVIDE FOR AUTHENTICATION ==============
 
