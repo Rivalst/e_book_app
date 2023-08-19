@@ -58,5 +58,17 @@ This section covers the authentication part of the app, including the main pages
   It contains text fields for the user to provide their email, name, password, and confirm password.
   The logic in this page manages the user registration process.
   [lib/controller/cubit/signup/...]
+
+
+
+
+
+
+
+
+
+
+- Else will be in Future.
+  
         
     
