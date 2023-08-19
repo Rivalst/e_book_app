@@ -1,8 +1,10 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:e_book_app/config/color_theme.dart';
 import 'package:e_book_app/config/routes/routes.dart';
+import 'package:e_book_app/controller/bloc/book_get_bloc/book_get_bloc.dart';
 import 'package:e_book_app/controller/bloc/bottom_bar_bloc/bottom_bar_bloc.dart';
 import 'package:e_book_app/controller/cubit/language/language_cubit.dart';
+import 'package:e_book_app/model/dataresources/remote/book_data.dart';
 import 'package:e_book_app/view/utils_widgets/color_pallet_widget.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => LanguageCubit(),
+          ),
+          BlocProvider(
+              create: (context) => BookGetBloc(BookDataGet())
           ),
         ],
         child: ColorPaletteInherited(

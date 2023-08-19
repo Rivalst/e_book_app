@@ -1,6 +1,5 @@
 import 'package:e_book_app/config/color_theme.dart';
 import 'package:e_book_app/config/routes/routes.dart';
-import 'package:e_book_app/controller/bloc/app_bloc/app_bloc.dart';
 import 'package:e_book_app/controller/bloc/bottom_bar_bloc/bottom_bar_bloc.dart';
 import 'package:e_book_app/view/utils_widgets/text_for_title_settings_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +22,6 @@ class AuthenticatedPage extends StatelessWidget {
             title: Text(getTitle(index: state, context: context)),
             backgroundColor:
                 AppColorThemeBraunBlack.of(context).whiteColorBackground,
-            actions: <Widget>[
-              IconButton(
-                key: const Key('authenticatedPage_logout_iconButton'),
-                icon: const Icon(Icons.exit_to_app),
-                onPressed: () {
-                  context.read<AppBloc>().add(const AppLogOutRequested());
-                },
-              )
-            ],
           ),
           body: onGenerateBottomBarItemPages(index: state),
           bottomNavigationBar: BottomNavigationBar(

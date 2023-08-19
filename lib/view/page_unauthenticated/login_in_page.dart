@@ -43,8 +43,10 @@ class LoginForm extends StatelessWidget {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(
-                  content:
-                      Text(state.errorMessage ?? 'Authentication Failure')));
+                  content: Text(state.errorMessage ?? 'Authentication Failure'),
+                  behavior: SnackBarBehavior.floating,
+              )
+              );
           }
         },
         child: Padding(
@@ -66,15 +68,14 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 30.0),
               const _EmailInput(),
               const _PasswordInput(),
-              const Expanded(child:
-                  Column(
-                    children: [
-                      _GoogleLoginButton(),
-                      SizedBox(height: 10.0),
-                      _LoginButton()
-                    ],
-                  )
-              )
+              const Expanded(
+                  child: Column(
+                children: [
+                  _GoogleLoginButton(),
+                  SizedBox(height: 10.0),
+                  _LoginButton()
+                ],
+              ))
             ],
           ),
         ));

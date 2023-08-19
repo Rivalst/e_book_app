@@ -7,5 +7,14 @@
   "language": "Language",
   "english": "English",
   "ukrainian": "Ukrainian",
-  "change_language": "Select language"
+  "language_select": "English",
+  "change_language": "Select language",
+  "subscription": "Subscription",
+  "subscription_account_basic": "Basic account",
+  "subscription_account_status": "Subscription is not",
+  "manage_subscription": "Manage Subscription",
+  "exit": "Exit",
+  "text_for_exit": "You sure that you want sing out?",
+  "yes": "Yes",
+  "no": "No"
 }

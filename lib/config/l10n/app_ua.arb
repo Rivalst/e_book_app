@@ -7,5 +7,15 @@
   "language": "Мова",
   "england": "Англійська",
   "ukrainian": "Українська",
-  "change_language": "Виберіть мову"
+  "language_select": "Українська",
+  "change_language": "Виберіть мову",
+  "subscription": "Підписка",
+  "subscription_account_basic": "Базовий аккаунт",
+  "subscription_account_status": "Підписка не оформлена",
+  "manage_subscription": "Управління підпиской",
+  "exit": "Вийти",
+  "text_for_exit": "Ви впевненні що ви хочете вийти?",
+  "yes": "Так",
+  "no": "Ні"
+
 }
