@@ -1,19 +1,20 @@
-import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:e_book_app/model/dataresources/remote/book_data.dart';
-import 'package:meta/meta.dart';
+import 'package:e_book_app/model/dataresources/remote/book_model.dart';
+import 'package:equatable/equatable.dart';
 
 part 'book_get_event.dart';
 
 part 'book_get_state.dart';
 
-class BookGetBloc extends Bloc<String, Map<String, dynamic>?> {
-  final BookDataLoad bookDataLoad;
+class BookGetBloc extends Bloc<BookGetEvent, BookGetState> {
+  final BooksRepository bookDataLoad;
 
-  BookGetBloc(this.bookDataLoad) : super(null);
-
-  Future<Map<String, dynamic>?> mapEventToState(String event) async {
-    return await bookDataLoad.mapOfBooksData();
-  }
+  BookGetBloc(this.bookDataLoad)
+      : super(bookDataLoad.books.isEmpty
+            ? BookGetState.loading(bookDataLoad)
+            : BookGetState.loaded(bookDataLoad)
+  );
 }

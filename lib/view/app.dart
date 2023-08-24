@@ -3,6 +3,7 @@ import 'package:e_book_app/config/color_theme.dart';
 import 'package:e_book_app/config/routes/routes.dart';
 import 'package:e_book_app/controller/bloc/book_get_bloc/book_get_bloc.dart';
 import 'package:e_book_app/controller/bloc/bottom_bar_bloc/bottom_bar_bloc.dart';
+import 'package:e_book_app/controller/cubit/count_of_loaded_book/count_of_book_cubit.dart';
 import 'package:e_book_app/controller/cubit/language/language_cubit.dart';
 import 'package:e_book_app/model/dataresources/remote/book_data.dart';
 import 'package:e_book_app/view/utils_widgets/color_pallet_widget.dart';
@@ -10,7 +11,6 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../controller/bloc/app_bloc/app_bloc.dart';
 
@@ -41,8 +41,11 @@ class MyApp extends StatelessWidget {
             create: (context) => LanguageCubit(),
           ),
           BlocProvider(
-              create: (context) => BookGetBloc(BookDataGet())
+              create: (context) => BookGetBloc(BooksRepository.instance)
           ),
+          BlocProvider(
+              create: (context) => CountOfBookCubit()
+          )
         ],
         child: ColorPaletteInherited(
             palette: AppColorThemeBraunBlack(), child: const AppView()),

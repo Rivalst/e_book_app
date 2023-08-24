@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_book_app/model/dataresources/local/language_set_manager.dart';
-import 'package:meta/meta.dart';
 
 part 'language_state.dart';
 
