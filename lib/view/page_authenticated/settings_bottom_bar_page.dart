@@ -19,7 +19,13 @@ class AuthenticatedPage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(getTitle(index: state, context: context)),
+            title: Text(
+                getTitle(index: state, context: context),
+                style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: AppColorThemeBraunBlack.of(context)
+                        .blackColor40)),
             backgroundColor:
                 AppColorThemeBraunBlack.of(context).whiteColorBackground,
           ),
