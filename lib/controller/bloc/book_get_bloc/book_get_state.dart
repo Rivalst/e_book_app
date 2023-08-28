@@ -35,12 +35,16 @@ final class BookGetState extends Equatable {
   }
 
   List<Book>? newestListOfBooks() {
+    final Random random = Random();
+
     if (_dataBookLoad == null) {
       return null;
     }
 
     final List<Book> filteredBooks =
         _dataBookLoad!.where((book) => book.authorBirthday > 1800).toList();
+    filteredBooks.shuffle(random);
+
     return filteredBooks.isNotEmpty ? filteredBooks : null;
   }
 

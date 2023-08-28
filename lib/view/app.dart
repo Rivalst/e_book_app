@@ -3,8 +3,9 @@ import 'package:e_book_app/config/color_theme.dart';
 import 'package:e_book_app/config/routes/routes.dart';
 import 'package:e_book_app/controller/bloc/book_get_bloc/book_get_bloc.dart';
 import 'package:e_book_app/controller/bloc/bottom_bar_bloc/bottom_bar_bloc.dart';
-import 'package:e_book_app/controller/cubit/count_of_loaded_book/count_of_book_cubit.dart';
+import 'package:e_book_app/controller/cubit/loaded_book/count_of_book_cubit.dart';
 import 'package:e_book_app/controller/cubit/language/language_cubit.dart';
+import 'package:e_book_app/controller/cubit/loaded_book/is_load_cubit.dart';
 import 'package:e_book_app/model/dataresources/remote/book_data.dart';
 import 'package:e_book_app/view/utils_widgets/color_pallet_widget.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -41,11 +42,9 @@ class MyApp extends StatelessWidget {
             create: (context) => LanguageCubit(),
           ),
           BlocProvider(
-              create: (context) => BookGetBloc(BooksRepository.instance)
-          ),
-          BlocProvider(
-              create: (context) => CountOfBookCubit()
-          )
+              create: (context) => BookGetBloc(BooksRepository.instance)),
+          BlocProvider(create: (context) => CountOfBookCubit()),
+          BlocProvider(create: (context) => IsLoadCubit())
         ],
         child: ColorPaletteInherited(
             palette: AppColorThemeBraunBlack(), child: const AppView()),
@@ -66,7 +65,8 @@ class AppView extends StatelessWidget {
     return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
         return MaterialApp(
-          locale: Locale(state.selectedLanguage == Language.ukrainian ? 'uk' : 'en'),
+          locale: Locale(
+              state.selectedLanguage == Language.ukrainian ? 'uk' : 'en'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
