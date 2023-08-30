@@ -1,4 +1,5 @@
-import 'package:e_book_app/model/dataresources/remote/book_data.dart';
+import 'package:e_book_app/model/dataresources/book_model.dart';
+import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/view/app.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,5 +17,7 @@ Future<void> main() async {
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;
 
-  runApp(MyApp(authenticationRepository: authenticationRepository));
+  runApp(MyApp(
+    authenticationRepository: authenticationRepository,
+  ));
 }

@@ -10,13 +10,12 @@ final class BookGetState extends Equatable {
       : _dataBookLoad = dataBookLoad,
         _status = status;
 
-  factory BookGetState.loading(BooksRepository data) {
+  factory BookGetState.loading(List<Book> data) {
     return const BookGetState._(status: LoadedBooksStatus.loading);
   }
 
-  factory BookGetState.loaded(BooksRepository data) {
-    return BookGetState._(
-        status: LoadedBooksStatus.loaded, dataBookLoad: data.books);
+  factory BookGetState.loaded(List<Book> data) {
+    return BookGetState._(status: LoadedBooksStatus.loaded, dataBookLoad: data);
   }
 
   final List<Book>? _dataBookLoad;

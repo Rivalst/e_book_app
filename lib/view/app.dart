@@ -6,7 +6,8 @@ import 'package:e_book_app/controller/bloc/bottom_bar_bloc/bottom_bar_bloc.dart'
 import 'package:e_book_app/controller/cubit/loaded_book/count_of_book_cubit.dart';
 import 'package:e_book_app/controller/cubit/language/language_cubit.dart';
 import 'package:e_book_app/controller/cubit/loaded_book/is_load_cubit.dart';
-import 'package:e_book_app/model/dataresources/remote/book_data.dart';
+import 'package:e_book_app/model/dataresources/book_model.dart';
+import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/view/utils_widgets/color_pallet_widget.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
             create: (context) => LanguageCubit(),
           ),
           BlocProvider(
-              create: (context) => BookGetBloc(BooksRepository.instance)),
+              create: (context) => BookGetBloc(BooksRepository.instance.books)),
           BlocProvider(create: (context) => CountOfBookCubit()),
           BlocProvider(create: (context) => IsLoadCubit())
         ],
