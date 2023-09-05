@@ -183,6 +183,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     onChanged: (FilterMark? value) {
                       context.read<FilterMarkCubit>().setFilterToAuthor();
                       Navigator.pop(context);
+
                     },
                   ),
                 ),
