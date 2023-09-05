@@ -1,4 +1,3 @@
-import 'package:e_book_app/model/dataresources/book_model.dart';
 import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/view/app.dart';
 import 'package:flutter/material.dart';

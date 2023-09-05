@@ -3,10 +3,11 @@ import 'package:e_book_app/config/color_theme.dart';
 import 'package:e_book_app/config/routes/routes.dart';
 import 'package:e_book_app/controller/bloc/book_get_bloc/book_get_bloc.dart';
 import 'package:e_book_app/controller/bloc/bottom_bar_bloc/bottom_bar_bloc.dart';
+import 'package:e_book_app/controller/cubit/book_discover/book_discover_cubit.dart';
+import 'package:e_book_app/controller/cubit/filter_for_books/filter_mark_cubit.dart';
 import 'package:e_book_app/controller/cubit/loaded_book/count_of_book_cubit.dart';
 import 'package:e_book_app/controller/cubit/language/language_cubit.dart';
 import 'package:e_book_app/controller/cubit/loaded_book/is_load_cubit.dart';
-import 'package:e_book_app/model/dataresources/book_model.dart';
 import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/view/utils_widgets/color_pallet_widget.dart';
 import 'package:flow_builder/flow_builder.dart';
@@ -45,7 +46,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => BookGetBloc(BooksRepository.instance.books)),
           BlocProvider(create: (context) => CountOfBookCubit()),
-          BlocProvider(create: (context) => IsLoadCubit())
+          BlocProvider(create: (context) => IsLoadCubit()),
+          BlocProvider(
+              create: (context) =>
+                  BookDiscoverCubit(books: BooksRepository.instance.books)),
+          BlocProvider(create: (context) => FilterMarkCubit())
         ],
         child: ColorPaletteInherited(
             palette: AppColorThemeBraunBlack(), child: const AppView()),
