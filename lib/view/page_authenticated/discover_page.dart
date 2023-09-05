@@ -4,7 +4,6 @@ import 'package:e_book_app/controller/cubit/filter_for_books/filter_mark_cubit.d
 import 'package:e_book_app/controller/cubit/loaded_book/is_load_cubit.dart';
 import 'package:e_book_app/model/dataresources/book_model.dart';
 import 'package:e_book_app/view/page_authenticated/book_detail_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -52,7 +51,10 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                         ),
                                         child: Center(
                                           child: IconButton(
-                                              onPressed: () => print('all'),
+                                              onPressed: () {
+                                                bottomSheet(
+                                                    contextFilter, stateFilter);
+                                              },
                                               icon: const Icon(
                                                 FontAwesomeIcons.list,
                                                 color: Colors.white,
@@ -85,10 +87,12 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                 final String title = book.title;
                                 final String authorName = book.authorName;
                                 final String urlImage = book.photo;
+                                final List<String> languages = book.language;
                                 return bookWidget(
                                     urlImage: urlImage,
                                     title: title,
                                     authorName: authorName,
+                                    languages: languages,
                                     book: book);
                               }),
                         )
@@ -104,10 +108,95 @@ class _DiscoverPageState extends State<DiscoverPage> {
     );
   }
 
+  Future<dynamic> bottomSheet(BuildContext context, FilterMarkState state) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            padding: const EdgeInsets.only(top: 15.0),
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Select your filter',
+                  style: TextStyle(
+                      color: AppColorThemeBraunBlack.of(context).blackColor60,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500),
+                ),
+                ListTile(
+                  title: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: 'Search books by ',
+                          style: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                              color: AppColorThemeBraunBlack.of(context)
+                                  .blackColor60)),
+                      TextSpan(
+                          text: 'title',
+                          style: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                              color: AppColorThemeBraunBlack.of(context)
+                                  .lightBraunColor100)),
+                    ]),
+                  ),
+                  leading: Radio<FilterMark>(
+                    value: FilterMark.title,
+                    activeColor:
+                        AppColorThemeBraunBlack.of(context).lightBraunColor100,
+                    groupValue: state.filter,
+                    onChanged: (FilterMark? value) {
+                      context.read<FilterMarkCubit>().setFilterToTitle();
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  title: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: 'Search books by ',
+                          style: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                              color: AppColorThemeBraunBlack.of(context)
+                                  .blackColor60)),
+                      TextSpan(
+                          text: 'author',
+                          style: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                              color: AppColorThemeBraunBlack.of(context)
+                                  .lightBraunColor100)),
+                    ]),
+                  ),
+                  leading: Radio<FilterMark>(
+                    value: FilterMark.author,
+                    activeColor:
+                        AppColorThemeBraunBlack.of(context).lightBraunColor100,
+                    groupValue: state.filter,
+                    onChanged: (FilterMark? value) {
+                      context.read<FilterMarkCubit>().setFilterToAuthor();
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   Widget bookWidget(
       {required String urlImage,
       required String title,
       required String authorName,
+      required List<String> languages,
       required Book book}) {
     return BlocBuilder<IsLoadCubit, bool>(
       builder: (context, state) {
@@ -178,8 +267,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(
-                      16.0, 5.0, 10.0, 5.0),
+                  padding: const EdgeInsets.fromLTRB(16.0, 5.0, 10.0, 5.0),
                   width: 190,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,7 +290,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                               fontWeight: FontWeight.w400,
                               color: AppColorThemeBraunBlack.of(context)
                                   .blackColor40)),
-                      Placeholder(
+                      const Placeholder(
                         fallbackHeight: 100,
                       )
                     ],
@@ -210,11 +298,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 ),
                 IconButton(
                     onPressed: () => print('asd'),
-                    color: AppColorThemeBraunBlack.of(context)
-                        .blackColor40,
-                    icon:
-                    const Icon(FontAwesomeIcons.bookmark)
-                ),
+                    color: AppColorThemeBraunBlack.of(context).blackColor40,
+                    icon: const Icon(FontAwesomeIcons.bookmark)),
               ],
             ),
           ),

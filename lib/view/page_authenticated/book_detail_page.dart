@@ -116,8 +116,79 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         borderRadius: BorderRadius.circular(5)),
                     surfaceTintColor: Colors.white,
                     shadowColor: Colors.white,
-                    child: Center(
-                      child: Text("Text"),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '272',
+                              style: TextStyle(
+                                  color: AppColorThemeBraunBlack.of(context)
+                                      .lightBraunColor100,
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold
+                              )
+                            ),
+                            Text(
+                                'Pages',
+                                style: TextStyle(
+                                    color: AppColorThemeBraunBlack.of(context)
+                                        .blackColor80,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500
+                                )
+                            )
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.book.language[0].toUpperCase(),
+                              style: TextStyle(
+                                  color: AppColorThemeBraunBlack.of(context)
+                                      .lightBraunColor100,
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold
+                              )
+                            ),
+                            Text(
+                                'Language',
+                                style: TextStyle(
+                                    color: AppColorThemeBraunBlack.of(context)
+                                        .blackColor80,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500
+                                )
+                            )
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '***',
+                              style: TextStyle(
+                                  color: AppColorThemeBraunBlack.of(context)
+                                      .lightBraunColor100,
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold
+                              )
+                            ),
+                            Text(
+                                'Rating',
+                                style: TextStyle(
+                                    color: AppColorThemeBraunBlack.of(context)
+                                        .blackColor80,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500
+                                )
+                            )
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),

@@ -5,12 +5,14 @@ class Book {
   final int authorBirthday;
   final int authorDeath;
   final String photo;
+  final List<String> language;
   final List<String> subjects;
 
   Book({
     required this.id,
     required this.title,
     required this.authorName,
+    required this.language,
     required this.authorBirthday,
     required this.authorDeath,
     required this.photo,
@@ -36,6 +38,9 @@ class Book {
             ? json['authors'][0]['death_year']
             : 0,
         photo: json['image'] ?? '',
+        language: json['languages'] != null
+            ? List<String>.from(json['languages'])
+            : [],
         subjects:
             json['subjects'] != null ? List<String>.from(json['subjects']) : [],
       );
@@ -46,6 +51,7 @@ class Book {
         authorName: '',
         authorBirthday: 0,
         authorDeath: 0,
+        language: [],
         photo: '',
         subjects: [],
       );

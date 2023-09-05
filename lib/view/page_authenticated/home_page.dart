@@ -83,9 +83,8 @@ class _HomePageState extends State<HomePage> {
                               return randomBook == null
                                   ? Center(
                                       child: CircularProgressIndicator(
-                                      color:
-                                          AppColorThemeBraunBlack.of(context)
-                                              .lightBraunColor100,
+                                      color: AppColorThemeBraunBlack.of(context)
+                                          .lightBraunColor100,
                                     ))
                                   : ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -95,17 +94,17 @@ class _HomePageState extends State<HomePage> {
                                           int indexHorizontal) {
                                         final Book book =
                                             randomBook[indexHorizontal];
-                                        final String title =
-                                            randomBook[indexHorizontal].title;
+                                        final String title = book.title;
                                         final String authorName =
-                                            randomBook[indexHorizontal]
-                                                .authorName;
-                                        final String urlImage =
-                                            randomBook[indexHorizontal].photo;
+                                            book.authorName;
+                                        final String urlImage = book.photo;
+                                        final List<String> languages =
+                                            book.language;
 
                                         return bookWidget(
                                             urlImage: urlImage,
                                             title: title,
+                                            languages: languages,
                                             authorName: authorName,
                                             book: book);
                                       },
@@ -145,19 +144,16 @@ class _HomePageState extends State<HomePage> {
                                         int indexHorizontal) {
                                       final Book book =
                                           booksAfter1800[indexHorizontal];
-                                      final String title =
-                                          booksAfter1800[indexHorizontal]
-                                              .title;
-                                      final String authorName =
-                                          booksAfter1800[indexHorizontal]
-                                              .authorName;
-                                      final String urlImage =
-                                          booksAfter1800[indexHorizontal]
-                                              .photo;
+                                      final String title = book.title;
+                                      final String authorName = book.authorName;
+                                      final String urlImage = book.photo;
+                                      final List<String> languages =
+                                          book.language;
                                       return bookWidget(
                                           urlImage: urlImage,
                                           title: title,
                                           authorName: authorName,
+                                          languages: languages,
                                           book: book);
                                     });
                           },
@@ -180,6 +176,7 @@ class _HomePageState extends State<HomePage> {
       {required String urlImage,
       required String title,
       required String authorName,
+      required List<String> languages,
       required Book book}) {
     return BlocBuilder<IsLoadCubit, bool>(
       builder: (context, state) {
@@ -213,8 +210,7 @@ class _HomePageState extends State<HomePage> {
                           child: Image.network(
                             urlImage,
                             fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context,
-                                Widget child,
+                            loadingBuilder: (BuildContext context, Widget child,
                                 ImageChunkEvent? loadingProgress) {
                               if (loadingProgress == null) {
                                 context.read<IsLoadCubit>().loaded();
@@ -224,14 +220,12 @@ class _HomePageState extends State<HomePage> {
                                   child: CircularProgressIndicator(
                                     color: AppColorThemeBraunBlack.of(context)
                                         .lightBraunColor100,
-                                    value:
-                                        loadingProgress.expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
                                   ),
                                 );
                               }
@@ -250,7 +244,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 18.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 18.0),
                   width: 170,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
