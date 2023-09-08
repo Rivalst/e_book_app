@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) =>
                   BookDiscoverCubit(books: BooksRepository.instance.books)),
-          BlocProvider(create: (context) => FilterMarkCubit())
+          BlocProvider(create: (context) => FilterMarkCubit()),
         ],
         child: ColorPaletteInherited(
             palette: AppColorThemeBraunBlack(), child: const AppView()),

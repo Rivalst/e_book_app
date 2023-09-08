@@ -12,6 +12,7 @@ Future<void> main() async {
 
   final booksParser = BooksRepository.instance;
   await booksParser.fetchBooksData();
+  await booksParser.fetchBookLibraryData();
 
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;

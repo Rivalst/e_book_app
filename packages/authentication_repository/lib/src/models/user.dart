@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
 
-  const User({required this.id, this.email, this.name, this.photo});
+  const User({required this.id, this.email, this.name, this.photo, this.books});
 
   /// The current user's email
   final String? email;
@@ -15,6 +15,8 @@ class User extends Equatable {
 
   /// Url for the current user's photo
   final String? photo;
+
+  final Map<String, dynamic>? books;
 
   /// Empty user which represents an unauthenticated user
   static const empty = User(id: '');

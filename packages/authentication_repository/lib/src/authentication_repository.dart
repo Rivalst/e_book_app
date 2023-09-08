@@ -165,7 +165,8 @@ class AuthenticationRepository {
     return _firebaseAuth.authStateChanges().asyncMap((firebaseUser) async {
       if (firebaseUser != null) {
         final userUID = firebaseUser.uid;
-        final userData = await _firebaseFirestore.collection('users').doc(userUID).get();
+        final userData =
+            await _firebaseFirestore.collection('users').doc(userUID).get();
         final userModel = firebaseUser.toUser(userData);
         _cache.write(key: userCacheKey, value: userModel);
         return userModel;
@@ -175,8 +176,6 @@ class AuthenticationRepository {
       }
     });
   }
-
-
 
   /// Returns the current cached user.
   /// Defaults to [User.empty] if there is no cached user.
@@ -197,19 +196,18 @@ class AuthenticationRepository {
 
       final user = _firebaseAuth.currentUser;
       final userUID = user != null ? user.uid : null;
-      if (userUID != null){
+      if (userUID != null) {
         await _firebaseFirestore.collection('users').doc(userUID).set({
           'name': name,
           'email': email,
-          'uid': userUID
+          'uid': userUID,
+          'books': <String, dynamic>{
+
+          },
         });
       } else {
         print('It null');
       }
-
-      // final userData = await _firebaseFirestore.collection('users').doc(userUID).get();
-      // final userModel = user!.toUser(userData);
-
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
@@ -277,6 +275,7 @@ extension on firebase_auth.User {
       id: uid,
       email: email,
       name: data?['name'] ?? displayName,
+      books: data?['books'] ?? null,
       photo: photoURL,
     );
   }
