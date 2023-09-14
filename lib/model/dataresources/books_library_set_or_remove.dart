@@ -7,7 +7,7 @@ abstract class BookLibraryController {
 
   const BookLibraryController();
 
-  void bookAddInLibrary(int id);
+  void bookAddInLibrary(int id, String? status);
 
   void bookRemoveInLibrary(int id);
 }
@@ -26,7 +26,7 @@ class BookLibraryAddOrDelete extends BookLibraryController {
         _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
   @override
-  void bookAddInLibrary(int id) async {
+  void bookAddInLibrary(int id, String? status) async {
     try {
       final user = _firebaseAuth.currentUser;
       final userUID = user?.uid;
@@ -36,7 +36,7 @@ class BookLibraryAddOrDelete extends BookLibraryController {
 
       final books = userDoc.data()?['books'] ?? <String, dynamic>{};
 
-      books[id.toString()] = {'status': ''};
+      books[id.toString()] = {'status': status ?? ''};
 
       await _firebaseFirestore
           .collection('users')

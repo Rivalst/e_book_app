@@ -12,17 +12,19 @@ class BookLibraryCubit extends Cubit<bool> {
   BookLibraryCubit(
       {required int id,
       required BookLibraryAddOrDelete bookLibraryAddOrDelete,
-      required BooksRepository booksRepository}
-      ): _id = id,
+      required BooksRepository booksRepository})
+      : _id = id,
         _booksRepository = booksRepository,
         _bookLibraryAddOrDelete = bookLibraryAddOrDelete,
         super(booksRepository.booksInLibraryMap![id.toString()] != null
             ? true
             : false);
 
-  void bookAddInCollection() {
-    _bookLibraryAddOrDelete.bookAddInLibrary(_id);
-    _booksRepository.booksInLibraryMap![_id.toString()] = {'status': ''};
+  void bookAddInCollection({String? status}) {
+    _bookLibraryAddOrDelete.bookAddInLibrary(_id, status);
+    _booksRepository.booksInLibraryMap![_id.toString()] = {
+      'status': status ?? ''
+    };
     emit(true);
   }
 

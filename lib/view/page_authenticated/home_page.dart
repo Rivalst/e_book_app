@@ -73,7 +73,8 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                                 fontSize: 22.0,
                                 fontWeight: FontWeight.w600,
-                                color: AppColorThemeBraunBlack.of(context)
+                                color: AppColorThemeBraunBlack
+                                    .of(context)
                                     .blackColor40)),
                       ),
                       SizedBox(
@@ -82,33 +83,34 @@ class _HomePageState extends State<HomePage> {
                             builder: (context, state) {
                               return randomBook == null
                                   ? Center(
-                                      child: CircularProgressIndicator(
-                                      color: AppColorThemeBraunBlack.of(context)
-                                          .lightBraunColor100,
-                                    ))
+                                  child: CircularProgressIndicator(
+                                    color: AppColorThemeBraunBlack
+                                        .of(context)
+                                        .lightBraunColor100,
+                                  ))
                                   : ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: state,
-                                      controller: _controller1,
-                                      itemBuilder: (BuildContext context,
-                                          int indexHorizontal) {
-                                        final Book book =
-                                            randomBook[indexHorizontal];
-                                        final String title = book.title;
-                                        final String authorName =
-                                            book.authorName;
-                                        final String urlImage = book.photo;
-                                        final List<String> languages =
-                                            book.language;
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state,
+                                controller: _controller1,
+                                itemBuilder: (BuildContext context,
+                                    int indexHorizontal) {
+                                  final Book book =
+                                  randomBook[indexHorizontal];
+                                  final String title = book.title;
+                                  final String authorName =
+                                      book.authorName;
+                                  final String urlImage = book.photo;
+                                  final List<String> languages =
+                                      book.language;
 
-                                        return bookWidget(
-                                            urlImage: urlImage,
-                                            title: title,
-                                            languages: languages,
-                                            authorName: authorName,
-                                            book: book);
-                                      },
-                                    );
+                                  return bookWidget(
+                                      urlImage: urlImage,
+                                      title: title,
+                                      languages: languages,
+                                      authorName: authorName,
+                                      book: book);
+                                },
+                              );
                             },
                           )),
                     ],
@@ -123,7 +125,8 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                                 fontSize: 22.0,
                                 fontWeight: FontWeight.w600,
-                                color: AppColorThemeBraunBlack.of(context)
+                                color: AppColorThemeBraunBlack
+                                    .of(context)
                                     .blackColor40)),
                       ),
                       SizedBox(
@@ -132,30 +135,31 @@ class _HomePageState extends State<HomePage> {
                           builder: (context, state) {
                             return booksAfter1800 == null
                                 ? Center(
-                                    child: CircularProgressIndicator(
-                                    color: AppColorThemeBraunBlack.of(context)
-                                        .lightBraunColor100,
-                                  ))
+                                child: CircularProgressIndicator(
+                                  color: AppColorThemeBraunBlack
+                                      .of(context)
+                                      .lightBraunColor100,
+                                ))
                                 : ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: state,
-                                    controller: _controller2,
-                                    itemBuilder: (BuildContext context,
-                                        int indexHorizontal) {
-                                      final Book book =
-                                          booksAfter1800[indexHorizontal];
-                                      final String title = book.title;
-                                      final String authorName = book.authorName;
-                                      final String urlImage = book.photo;
-                                      final List<String> languages =
-                                          book.language;
-                                      return bookWidget(
-                                          urlImage: urlImage,
-                                          title: title,
-                                          authorName: authorName,
-                                          languages: languages,
-                                          book: book);
-                                    });
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state,
+                                controller: _controller2,
+                                itemBuilder: (BuildContext context,
+                                    int indexHorizontal) {
+                                  final Book book =
+                                  booksAfter1800[indexHorizontal];
+                                  final String title = book.title;
+                                  final String authorName = book.authorName;
+                                  final String urlImage = book.photo;
+                                  final List<String> languages =
+                                      book.language;
+                                  return bookWidget(
+                                      urlImage: urlImage,
+                                      title: title,
+                                      authorName: authorName,
+                                      languages: languages,
+                                      book: book);
+                                });
                           },
                         ),
                       ),
@@ -164,29 +168,33 @@ class _HomePageState extends State<HomePage> {
               }
               return CircularProgressIndicator(
                   color:
-                      AppColorThemeBraunBlack.of(context).lightBraunColor100);
+                  AppColorThemeBraunBlack
+                      .of(context)
+                      .lightBraunColor100);
             }),
         backgroundColor:
-            AppColorThemeBraunBlack.of(context).whiteColorBackground,
+        AppColorThemeBraunBlack
+            .of(context)
+            .whiteColorBackground,
       );
     });
   }
 
-  Widget bookWidget(
-      {required String urlImage,
-      required String title,
-      required String authorName,
-      required List<String> languages,
-      required Book book}) {
+  Widget bookWidget({required String urlImage,
+    required String title,
+    required String authorName,
+    required List<String> languages,
+    required Book book}) {
     return BlocBuilder<IsLoadCubit, bool>(
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BookDetailPage(book: book)),
-            );
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      BookDetailPage(book: book, key: UniqueKey()),
+                ));
           },
           child: Padding(
             padding: const EdgeInsets.only(top: 17.0),
@@ -201,9 +209,10 @@ class _HomePageState extends State<HomePage> {
                         if (!state)
                           Center(
                               child: CircularProgressIndicator(
-                            color: AppColorThemeBraunBlack.of(context)
-                                .lightBraunColor100,
-                          )),
+                                color: AppColorThemeBraunBlack
+                                    .of(context)
+                                    .lightBraunColor100,
+                              )),
                         SizedBox(
                           height: 195,
                           width: 135,
@@ -218,13 +227,14 @@ class _HomePageState extends State<HomePage> {
                               } else {
                                 return Center(
                                   child: CircularProgressIndicator(
-                                    color: AppColorThemeBraunBlack.of(context)
+                                    color: AppColorThemeBraunBlack
+                                        .of(context)
                                         .lightBraunColor100,
                                     value: loadingProgress.expectedTotalBytes !=
-                                            null
+                                        null
                                         ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
+                                        .cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
                                         : null,
                                   ),
                                 );
@@ -257,7 +267,8 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
-                              color: AppColorThemeBraunBlack.of(context)
+                              color: AppColorThemeBraunBlack
+                                  .of(context)
                                   .blackColor80)),
                       Text(authorName,
                           textAlign: TextAlign.start,
@@ -266,7 +277,8 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontSize: 14.0,
                               fontWeight: FontWeight.w400,
-                              color: AppColorThemeBraunBlack.of(context)
+                              color: AppColorThemeBraunBlack
+                                  .of(context)
                                   .blackColor40)),
                     ],
                   ),

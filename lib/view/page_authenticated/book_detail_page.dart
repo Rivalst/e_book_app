@@ -5,7 +5,6 @@ import 'package:e_book_app/model/dataresources/book_model.dart';
 import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BookDetailPage extends StatefulWidget {
   const BookDetailPage({required this.book, Key? key}) : super(key: key);
@@ -75,50 +74,38 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      IconButton(
-                                          onPressed: () => print('asd'),
-                                          color: AppColorThemeBraunBlack.of(
-                                                  context)
-                                              .blackColor60,
-                                          icon: const Icon(
-                                              FontAwesomeIcons.download)),
-                                      const SizedBox(height: 5),
-                                      // IconButton(
-                                      //     iconSize: 28.0,
-                                      //     highlightColor: Colors.transparent,
-                                      //     onPressed: () {
-                                      //       if (state == false) {
-                                      //         context
-                                      //             .read<BookLibraryCubit>()
-                                      //             .bookAddInCollection();
-                                      //       } else {
-                                      //         context
-                                      //             .read<BookLibraryCubit>()
-                                      //             .bookRemoveInLibrary();
-                                      //       }
-                                      //     },
-                                      //     color: AppColorThemeBraunBlack.of(
-                                      //             context)
-                                      //         .blackColor40,
-                                      //     icon: AnimatedSwitcher(
-                                      //       duration: const Duration(
-                                      //           milliseconds: 200),
-                                      //       child: Icon(
-                                      //         state == false
-                                      //             ? Icons.bookmark_border
-                                      //             : Icons.bookmark,
-                                      //         color: state == false
-                                      //             ? null
-                                      //             : AppColorThemeBraunBlack.of(
-                                      //                     context)
-                                      //                 .lightBraunColor100,
-                                      //         key:
-                                      //             UniqueKey(), // важливо вказати ключ, щоб анімація працювала
-                                      //       ),
-                                      //     )),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: InkWell(
+                                            onTap: () => print('asd'),
+                                            child: Icon(
+                                              Icons.sim_card_download_rounded,
+                                              size: 30,
+                                              color: AppColorThemeBraunBlack.of(
+                                                      context)
+                                                  .blackColor80,
+                                            )),
+                                      ),
+                                      const SizedBox(height: 5.0),
                                       MyButton(
                                           contextBook: context,
-                                          stateCheck: state)
+                                          stateCheck: state),
+                                      const SizedBox(height: 5.0),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: InkResponse(
+                                          onTap: () {
+                                            statusChanger(contextBook: context);
+                                          },
+                                          child: Icon(
+                                            Icons.pending,
+                                            color: AppColorThemeBraunBlack.of(
+                                                    context)
+                                                .blackColor80,
+                                            size: 28,
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   )
                                 ],
@@ -239,6 +226,90 @@ class _BookDetailPageState extends State<BookDetailPage> {
         },
       ),
     );
+  }
+
+  Future<dynamic> statusChanger({required BuildContext contextBook}) {
+    String bookStatus = BooksRepository.instance.booksInLibraryMap!
+            .containsKey(widget.book.id.toString())
+        ? BooksRepository.instance.booksInLibraryMap![widget.book.id.toString()]
+            ['status']
+        : '';
+    return showDialog(
+        context: contextBook,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            backgroundColor:
+                AppColorThemeBraunBlack.of(context).whiteColorBackground,
+            surfaceTintColor:
+                AppColorThemeBraunBlack.of(context).whiteColorBackground,
+            children: [
+              TextButton(
+                onPressed: () {
+                  contextBook
+                      .read<BookLibraryCubit>()
+                      .bookAddInCollection(status: 'In reading');
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'In reading',
+                  style: TextStyle(
+                      color: bookStatus == 'In reading'
+                          ? AppColorThemeBraunBlack.of(context)
+                              .lightBraunColor100
+                          : AppColorThemeBraunBlack.of(context).blackColor60),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  contextBook
+                      .read<BookLibraryCubit>()
+                      .bookAddInCollection(status: 'Will be read');
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Will be read',
+                  style: TextStyle(
+                      color: bookStatus == 'Will be read'
+                          ? AppColorThemeBraunBlack.of(context)
+                              .lightBraunColor100
+                          : AppColorThemeBraunBlack.of(context).blackColor60),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  contextBook
+                      .read<BookLibraryCubit>()
+                      .bookAddInCollection(status: 'Has been reading');
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Has been reading',
+                  style: TextStyle(
+                      color: bookStatus == 'Has been reading'
+                          ? AppColorThemeBraunBlack.of(context)
+                              .lightBraunColor100
+                          : AppColorThemeBraunBlack.of(context).blackColor60),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  contextBook
+                      .read<BookLibraryCubit>()
+                      .bookAddInCollection(status: 'Likes');
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Likes',
+                  style: TextStyle(
+                      color: bookStatus == 'Likes'
+                          ? AppColorThemeBraunBlack.of(context)
+                              .lightBraunColor100
+                          : AppColorThemeBraunBlack.of(context).blackColor60),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }
 

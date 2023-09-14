@@ -4,6 +4,8 @@ import 'package:e_book_app/controller/cubit/book_library/book_library_cubit.dart
 import 'package:e_book_app/controller/cubit/filter_for_books/filter_mark_cubit.dart';
 import 'package:e_book_app/controller/cubit/loaded_book/is_load_cubit.dart';
 import 'package:e_book_app/model/dataresources/book_model.dart';
+import 'package:e_book_app/model/dataresources/books_library_set_or_remove.dart';
+import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/view/page_authenticated/book_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -89,12 +91,26 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                 final String authorName = book.authorName;
                                 final String urlImage = book.photo;
                                 final List<String> languages = book.language;
-                                return bookWidget(
-                                    urlImage: urlImage,
-                                    title: title,
-                                    authorName: authorName,
-                                    languages: languages,
-                                    book: book);
+                                return BlocProvider(
+                                  create: (context) => BookLibraryCubit(
+                                      id: book.id,
+                                      bookLibraryAddOrDelete:
+                                          BookLibraryAddOrDelete(),
+                                      booksRepository:
+                                          BooksRepository.instance),
+                                  child: BlocBuilder<BookLibraryCubit, bool>(
+                                    builder: (context, state) {
+                                      return bookWidget(
+                                          urlImage: urlImage,
+                                          title: title,
+                                          authorName: authorName,
+                                          languages: languages,
+                                          contextBook: context,
+                                          stateCheck: state,
+                                          book: book);
+                                    },
+                                  ),
+                                );
                               }),
                         )
                       ]),
@@ -156,7 +172,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     },
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 ListTile(
                   title: RichText(
                     text: TextSpan(children: [
@@ -198,6 +214,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
       required String title,
       required String authorName,
       required List<String> languages,
+      required BuildContext contextBook,
+      required bool stateCheck,
       required Book book}) {
     return BlocBuilder<IsLoadCubit, bool>(
       builder: (context, state) {
@@ -206,14 +224,15 @@ class _DiscoverPageState extends State<DiscoverPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => BookDetailPage(book: book)),
+                  builder: (context) =>
+                      BookDetailPage(book: book, key: UniqueKey())),
             );
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Card(
                   shape: RoundedRectangleBorder(
@@ -269,7 +288,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   ),
                 ),
                 Container(
-                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 2.1),
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width / 2.3),
                   padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 5.0),
                   // width: 160,
                   child: Column(
@@ -299,20 +319,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     ],
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      if (state == false) {
-                        context.read<BookLibraryCubit>().bookAddInCollection();
-                        print('add');
-                      } else {
-                        context.read<BookLibraryCubit>().bookRemoveInLibrary();
-                        print('remove');
-                      }
-                    },
-                    color: AppColorThemeBraunBlack.of(context).blackColor40,
-                    icon: state == true
-                        ? const Icon(Icons.bookmark)
-                        : const Icon(FontAwesomeIcons.bookmark)),
+                MyButton(contextBook: contextBook, stateCheck: stateCheck)
               ],
             ),
           ),
