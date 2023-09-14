@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:e_book_app/controller/cubit/book_library/books_library_contoller.dart';
+import 'package:e_book_app/model/dataresources/books_library_set_or_remove.dart';
 import 'package:e_book_app/model/repositories/book_repository.dart';
 
 class BookLibraryCubit extends Cubit<bool> {
@@ -12,22 +12,23 @@ class BookLibraryCubit extends Cubit<bool> {
   BookLibraryCubit(
       {required int id,
       required BookLibraryAddOrDelete bookLibraryAddOrDelete,
-      required BooksRepository booksRepository})
-      : _id = id,
+      required BooksRepository booksRepository}
+      ): _id = id,
         _booksRepository = booksRepository,
         _bookLibraryAddOrDelete = bookLibraryAddOrDelete,
-        super(booksRepository.booksInLibrary!['books'][id.toString()] != null
+        super(booksRepository.booksInLibraryMap![id.toString()] != null
             ? true
             : false);
 
   void bookAddInCollection() {
     _bookLibraryAddOrDelete.bookAddInLibrary(_id);
-    _booksRepository.booksInLibrary!['books'][_id.toString()] = {'status': ''};
+    _booksRepository.booksInLibraryMap![_id.toString()] = {'status': ''};
     emit(true);
   }
 
   void bookRemoveInLibrary() {
     _bookLibraryAddOrDelete.bookRemoveInLibrary(_id);
+    _booksRepository.booksInLibraryMap!.remove(_id.toString());
     emit(false);
   }
 }

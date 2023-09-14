@@ -17,7 +17,7 @@ class BooksDataGetFailure implements Exception {
 
 class BooksRepository {
   List<Book> books = [];
-  Map<String, dynamic>? booksInLibrary = {};
+  Map<String, dynamic>? booksInLibraryMap = {};
 
   static final BooksRepository _instance =
       BooksRepository._privateConstructor();
@@ -50,8 +50,7 @@ class BooksRepository {
       final userUID = user?.uid;
       final dataUser =
           await _firebaseFirestore.collection('users').doc(userUID).get();
-      booksInLibrary = dataUser.data();
-      print(booksInLibrary);
+      booksInLibraryMap = dataUser.data()!['books'];
     } on FirebaseException catch (e) {
       throw BooksDataGetFailure.fromCode(e.code, e.message);
     } catch (_) {

@@ -1,5 +1,6 @@
 import 'package:e_book_app/config/color_theme.dart';
 import 'package:e_book_app/controller/cubit/book_discover/book_discover_cubit.dart';
+import 'package:e_book_app/controller/cubit/book_library/book_library_cubit.dart';
 import 'package:e_book_app/controller/cubit/filter_for_books/filter_mark_cubit.dart';
 import 'package:e_book_app/controller/cubit/loaded_book/is_load_cubit.dart';
 import 'package:e_book_app/model/dataresources/book_model.dart';
@@ -79,7 +80,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           ],
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height,
+                          height: MediaQuery.of(context).size.height - 22.0 * 2,
                           child: ListView.builder(
                               itemCount: stateDiscover.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -183,7 +184,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     onChanged: (FilterMark? value) {
                       context.read<FilterMarkCubit>().setFilterToAuthor();
                       Navigator.pop(context);
-
                     },
                   ),
                 ),
@@ -210,9 +210,10 @@ class _DiscoverPageState extends State<DiscoverPage> {
             );
           },
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+            padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Card(
                   shape: RoundedRectangleBorder(
@@ -268,8 +269,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(16.0, 5.0, 10.0, 5.0),
-                  width: 190,
+                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 2.1),
+                  padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 5.0),
+                  // width: 160,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -298,9 +300,19 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () => print('asd'),
+                    onPressed: () {
+                      if (state == false) {
+                        context.read<BookLibraryCubit>().bookAddInCollection();
+                        print('add');
+                      } else {
+                        context.read<BookLibraryCubit>().bookRemoveInLibrary();
+                        print('remove');
+                      }
+                    },
                     color: AppColorThemeBraunBlack.of(context).blackColor40,
-                    icon: const Icon(FontAwesomeIcons.bookmark)),
+                    icon: state == true
+                        ? const Icon(Icons.bookmark)
+                        : const Icon(FontAwesomeIcons.bookmark)),
               ],
             ),
           ),
