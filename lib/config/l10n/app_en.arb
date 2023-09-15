@@ -16,5 +16,16 @@
   "exit": "Exit",
   "text_for_exit": "You sure that you want sing out?",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "for_your_attention": "For your attention",
+  "after_the_17th_century": "After the 17th century",
+  "select_your_filter": "Select your filter",
+  "search_books_by": "Search books by ",
+  "title": "title",
+  "author": "author",
+  "all_library": "All library",
+  "in_reading": "In reading",
+  "will_be_read": "Will be read",
+  "has_been_read": "Has been read",
+  "likes": "Likes"
 }

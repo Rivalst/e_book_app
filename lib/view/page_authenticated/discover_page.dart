@@ -7,6 +7,7 @@ import 'package:e_book_app/model/dataresources/book_model.dart';
 import 'package:e_book_app/model/dataresources/books_library_set_or_remove.dart';
 import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/view/page_authenticated/book_detail_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,15 +42,16 @@ class _DiscoverPageState extends State<DiscoverPage> {
                               child: TextField(
                                   decoration: InputDecoration(
                                       helperText: '',
-                                      hintText: 'Search',
+                                      hintText: AppLocalizations.of(context)!
+                                          .discover,
                                       prefixIcon: const Icon(Icons.search),
                                       suffixIcon: Container(
                                         width: 20,
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                          BorderRadius.circular(10.0),
+                                              BorderRadius.circular(10.0),
                                           color: AppColorThemeBraunBlack.of(
-                                              context)
+                                                  context)
                                               .lightBraunColor100,
                                         ),
                                         child: Center(
@@ -82,7 +84,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           ],
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height - 22.0 * 1.5,
+                          height:
+                              MediaQuery.of(context).size.height - 22.0 * 1.5,
                           child: ListView.builder(
                               itemCount: stateDiscover.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -95,9 +98,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                   create: (context) => BookLibraryCubit(
                                       id: book.id,
                                       bookLibraryAddOrDelete:
-                                      BookLibraryAddOrDelete(),
+                                          BookLibraryAddOrDelete(),
                                       booksRepository:
-                                      BooksRepository.instance),
+                                          BooksRepository.instance),
                                   child: BlocBuilder<BookLibraryCubit, bool>(
                                     builder: (context, stateBool) {
                                       return bookWidget(
@@ -117,7 +120,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 ),
               ),
               backgroundColor:
-              AppColorThemeBraunBlack.of(context).whiteColorBackground,
+                  AppColorThemeBraunBlack.of(context).whiteColorBackground,
             );
           },
         );
@@ -136,7 +139,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Select your filter',
+                  AppLocalizations.of(context)!.select_your_filter,
                   style: TextStyle(
                       color: AppColorThemeBraunBlack.of(context).blackColor60,
                       fontSize: 22,
@@ -146,14 +149,14 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   title: RichText(
                     text: TextSpan(children: [
                       TextSpan(
-                          text: 'Search books by ',
+                          text:  AppLocalizations.of(context)!.search_books_by,
                           style: TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
                               color: AppColorThemeBraunBlack.of(context)
                                   .blackColor60)),
                       TextSpan(
-                          text: 'title',
+                          text:  AppLocalizations.of(context)!.title,
                           style: TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
@@ -164,7 +167,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   leading: Radio<FilterMark>(
                     value: FilterMark.title,
                     activeColor:
-                    AppColorThemeBraunBlack.of(context).lightBraunColor100,
+                        AppColorThemeBraunBlack.of(context).lightBraunColor100,
                     groupValue: state.filter,
                     onChanged: (FilterMark? value) {
                       context.read<FilterMarkCubit>().setFilterToTitle();
@@ -177,14 +180,14 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   title: RichText(
                     text: TextSpan(children: [
                       TextSpan(
-                          text: 'Search books by ',
+                          text:  AppLocalizations.of(context)!.search_books_by,
                           style: TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
                               color: AppColorThemeBraunBlack.of(context)
                                   .blackColor60)),
                       TextSpan(
-                          text: 'author',
+                          text:  AppLocalizations.of(context)!.author,
                           style: TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
@@ -195,7 +198,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   leading: Radio<FilterMark>(
                     value: FilterMark.author,
                     activeColor:
-                    AppColorThemeBraunBlack.of(context).lightBraunColor100,
+                        AppColorThemeBraunBlack.of(context).lightBraunColor100,
                     groupValue: state.filter,
                     onChanged: (FilterMark? value) {
                       context.read<FilterMarkCubit>().setFilterToAuthor();
@@ -211,12 +214,12 @@ class _DiscoverPageState extends State<DiscoverPage> {
 
   Widget bookWidget(
       {required String urlImage,
-        required String title,
-        required String authorName,
-        required List<String> languages,
-        required BuildContext contextBook,
-        required bool stateCheck,
-        required Book book}) {
+      required String title,
+      required String authorName,
+      required List<String> languages,
+      required BuildContext contextBook,
+      required bool stateCheck,
+      required Book book}) {
     return BlocBuilder<IsLoadCubit, bool>(
       builder: (context, state) {
         return GestureDetector(
@@ -245,9 +248,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
                         if (!state)
                           Center(
                               child: CircularProgressIndicator(
-                                color: AppColorThemeBraunBlack.of(context)
-                                    .lightBraunColor100,
-                              )),
+                            color: AppColorThemeBraunBlack.of(context)
+                                .lightBraunColor100,
+                          )),
                         SizedBox(
                           height: 170,
                           width: 110,
@@ -265,10 +268,10 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                     color: AppColorThemeBraunBlack.of(context)
                                         .lightBraunColor100,
                                     value: loadingProgress.expectedTotalBytes !=
-                                        null
+                                            null
                                         ? loadingProgress
-                                        .cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
                                         : null,
                                   ),
                                 );

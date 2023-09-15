@@ -5,7 +5,7 @@
   "discover": "Пошук",
   "home": "Головна",
   "language": "Мова",
-  "england": "Англійська",
+  "english": "Англійська",
   "ukrainian": "Українська",
   "language_select": "Українська",
   "change_language": "Виберіть мову",
@@ -16,6 +16,17 @@
   "exit": "Вийти",
   "text_for_exit": "Ви впевненні що ви хочете вийти?",
   "yes": "Так",
-  "no": "Ні"
+  "no": "Ні",
+  "for_your_attention": "До уваги",
+  "after_the_17th_century": "Після 17 сторіччя",
+  "select_your_filter": "Вибор фільтру",
+  "search_books_by": "Пошук книг за ",
+  "title": "назвою",
+  "author": "автором",
+  "all_library": "Вся бібліотека",
+  "in_reading": "У читанні",
+  "will_be_read": "Буду читати",
+  "has_been_read": "Прочитано",
+  "likes": "Улюблене"
 
 }

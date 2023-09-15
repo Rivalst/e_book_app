@@ -5,6 +5,7 @@ import 'package:e_book_app/controller/cubit/book_library/book_library_cubit.dart
 import 'package:e_book_app/model/dataresources/book_model.dart';
 import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/view/utils_widgets/button_bookmark_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -269,7 +270,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'In reading',
+                  AppLocalizations.of(context)!.in_reading,
                   style: TextStyle(
                       color: bookStatus == 'In reading'
                           ? AppColorThemeBraunBlack.of(context)
@@ -285,7 +286,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Will be read',
+                  AppLocalizations.of(context)!.will_be_read,
                   style: TextStyle(
                       color: bookStatus == 'Will be read'
                           ? AppColorThemeBraunBlack.of(context)
@@ -301,7 +302,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Has been reading',
+                  AppLocalizations.of(context)!.has_been_read,
                   style: TextStyle(
                       color: bookStatus == 'Has been reading'
                           ? AppColorThemeBraunBlack.of(context)
@@ -317,7 +318,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Likes',
+                  AppLocalizations.of(context)!.likes,
                   style: TextStyle(
                       color: bookStatus == 'Likes'
                           ? AppColorThemeBraunBlack.of(context)
