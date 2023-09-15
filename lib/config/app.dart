@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:e_book_app/config/color_theme.dart';
 import 'package:e_book_app/config/routes/routes.dart';
 import 'package:e_book_app/controller/bloc/book_get_bloc/book_get_bloc.dart';
+import 'package:e_book_app/controller/bloc/book_library_get/book_library_get_bloc.dart';
 import 'package:e_book_app/controller/bloc/bottom_bar_bloc/bottom_bar_bloc.dart';
 import 'package:e_book_app/controller/cubit/book_discover/book_discover_cubit.dart';
 import 'package:e_book_app/controller/cubit/book_discover_library/book_discover_library_cubit.dart';
@@ -53,6 +54,10 @@ class MyApp extends StatelessWidget {
                   BookDiscoverCubit(books: BooksRepository.instance.books)),
           BlocProvider(create: (context) => FilterMarkCubit()),
           BlocProvider(create: (context) => BookDiscoverLibraryCubit()),
+          BlocProvider(
+              create: (context) => BookLibraryGetBloc(
+                  booksList: BooksRepository.instance.books,
+                  booksMap: BooksRepository.instance.booksInLibraryMap))
         ],
         child: ColorPaletteInherited(
             palette: AppColorThemeBraunBlack(), child: const AppView()),

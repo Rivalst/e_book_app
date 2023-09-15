@@ -82,7 +82,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           ],
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height - 22.0 * 2,
+                          height: MediaQuery.of(context).size.height - 22.0 * 1.5,
                           child: ListView.builder(
                               itemCount: stateDiscover.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -99,14 +99,14 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                       booksRepository:
                                           BooksRepository.instance),
                                   child: BlocBuilder<BookLibraryCubit, bool>(
-                                    builder: (context, state) {
+                                    builder: (context, stateBool) {
                                       return bookWidget(
                                           urlImage: urlImage,
                                           title: title,
                                           authorName: authorName,
                                           languages: languages,
                                           contextBook: context,
-                                          stateCheck: state,
+                                          stateCheck: stateBool,
                                           book: book);
                                     },
                                   ),

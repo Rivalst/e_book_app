@@ -1,5 +1,5 @@
 import 'package:e_book_app/model/repositories/book_repository.dart';
-import 'package:e_book_app/view/app.dart';
+import 'package:e_book_app/config/app.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:authentication_repository/authentication_repository.dart';

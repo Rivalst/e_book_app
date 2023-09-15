@@ -18,29 +18,6 @@ final class BookLibraryGetState extends Equatable {
         books: booksList, status: statusMark ?? LibraryMark.allLibrary);
   }
 
-  factory BookLibraryGetState.inReading(
-      {required List<Book> booksList, LibraryMark? statusMark}) {
-    return BookLibraryGetState._(
-        books: booksList, status: statusMark ?? LibraryMark.inReading);
-  }
-
-  factory BookLibraryGetState.willBeRead(
-      {required List<Book> booksList, LibraryMark? statusMark}) {
-    return BookLibraryGetState._(
-        books: booksList, status: statusMark ?? LibraryMark.willBeRead);
-  }
-
-  factory BookLibraryGetState.hasBeenRead(
-      {required List<Book> booksList, LibraryMark? statusMark}) {
-    return BookLibraryGetState._(
-        books: booksList, status: statusMark ?? LibraryMark.hasBeenRead);
-  }
-
-  factory BookLibraryGetState.likes(
-      {required List<Book> booksList, LibraryMark? statusMark}) {
-    return BookLibraryGetState._(
-        books: booksList, status: statusMark ?? LibraryMark.likes);
-  }
 
   List<Book> get books => _books;
 

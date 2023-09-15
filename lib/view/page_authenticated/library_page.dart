@@ -20,7 +20,7 @@ class LibraryPage extends StatefulWidget {
 }
 
 class _LibraryPageState extends State<LibraryPage> {
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   bool focusCheck = false;
 
   @override
@@ -37,387 +37,371 @@ class _LibraryPageState extends State<LibraryPage> {
           focusCheck = true;
         });
       } else {
-        focusCheck = false;
+        setState(() {
+          focusCheck = false;
+        });
       }
     });
 
-    return BlocProvider(
-      create: (context) => BookLibraryGetBloc(
-          booksList: BooksRepository.instance.books,
-          booksMap: BooksRepository.instance.booksInLibraryMap),
-      child: BlocBuilder<BookDiscoverLibraryCubit, List<Book>>(
-        builder: (context, stateBooks) {
-          return BlocBuilder<BookLibraryGetBloc, BookLibraryGetState>(
-            builder: (context, state) {
-              return GestureDetector(
-                onTap: () => FocusScope.of(context).unfocus(),
-                child: DefaultTabController(
-                  length: focusCheck ? 0 : 5,
-                  child: Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: AppColorThemeBraunBlack.of(context)
-                            .whiteColorBackground,
-                        title: TextField(
-                          decoration: const InputDecoration(
-                              hintText: 'Search',
-                              prefixIcon: Icon(Icons.search)),
-                          focusNode: _focusNode,
-                          onChanged: (element) {
-                            context
-                                .read<BookDiscoverLibraryCubit>()
-                                .search(element);
-                          },
-                        ),
-                        bottom: TabBar(
-                          isScrollable: true,
-                          indicatorColor: AppColorThemeBraunBlack.of(context)
-                              .lightBraunColor100,
-                          labelColor: AppColorThemeBraunBlack.of(context)
-                              .lightBraunColor100,
-                          tabs: focusCheck
-                              ? []
-                              : const [
-                                  Text('All Library'),
-                                  Text('In reading'),
-                                  Text('Will be read'),
-                                  Text('Has been read'),
-                                  Text('Likes')
-                                ],
-                        ),
+    return BlocBuilder<BookLibraryGetBloc, BookLibraryGetState>(
+      builder: (context, state) {
+        return BlocBuilder<BookDiscoverLibraryCubit, List<Book>>(
+          builder: (context, stateBooks) {
+            return GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: DefaultTabController(
+                length: focusCheck ? 0 : 5,
+                child: Scaffold(
+                    appBar: AppBar(
+                      backgroundColor: AppColorThemeBraunBlack.of(context)
+                          .whiteColorBackground,
+                      title: TextField(
+                        decoration: const InputDecoration(
+                            hintText: 'Search', prefixIcon: Icon(Icons.search)),
+                        focusNode: _focusNode,
+                        onChanged: (element) {
+                          context
+                              .read<BookDiscoverLibraryCubit>()
+                              .search(element);
+                        },
                       ),
-                      body: focusCheck
-                          ? SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height - 22.0 * 2,
-                              child: ListView.builder(
-                                  itemCount: stateBooks.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final Book book = stateBooks[index];
-                                    final String title = book.title;
-                                    final String authorName = book.authorName;
-                                    final String urlImage = book.photo;
-                                    final List<String> languages =
-                                        book.language;
-                                    return BlocProvider(
-                                      create: (context) => BookLibraryCubit(
-                                          id: book.id,
-                                          bookLibraryAddOrDelete:
-                                              BookLibraryAddOrDelete(),
-                                          booksRepository:
-                                              BooksRepository.instance),
-                                      child:
-                                          BlocBuilder<BookLibraryCubit, bool>(
-                                        builder: (context, state) {
-                                          return bookWidget(
-                                              urlImage: urlImage,
-                                              title: title,
-                                              authorName: authorName,
-                                              languages: languages,
-                                              contextBook: context,
-                                              stateCheck: state,
-                                              book: book);
-                                        },
-                                      ),
-                                    );
-                                  }),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.all(17.0),
-                              child: GestureDetector(
-                                  onTap: () => FocusScope.of(context).unfocus(),
-                                  child: TabBarView(
-                                    children: [
-                                      /// All Library
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height -
-                                                22.0 * 2,
-                                        child: ListView.builder(
-                                            itemCount: state.books.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              final Book book =
-                                                  state.books[index];
-                                              final String title = book.title;
-                                              final String authorName =
-                                                  book.authorName;
-                                              final String urlImage =
-                                                  book.photo;
-                                              final List<String> languages =
-                                                  book.language;
-                                              return BlocProvider(
-                                                create: (context) =>
-                                                    BookLibraryCubit(
-                                                        id: book.id,
-                                                        bookLibraryAddOrDelete:
-                                                            BookLibraryAddOrDelete(),
-                                                        booksRepository:
-                                                            BooksRepository
-                                                                .instance),
-                                                child: BlocBuilder<
-                                                    BookLibraryCubit, bool>(
-                                                  builder: (context, state) {
-                                                    return bookWidget(
-                                                        urlImage: urlImage,
-                                                        title: title,
-                                                        authorName: authorName,
-                                                        languages: languages,
-                                                        contextBook: context,
-                                                        stateCheck: state,
-                                                        book: book);
-                                                  },
-                                                ),
-                                              );
-                                            }),
-                                      ),
+                      bottom: TabBar(
+                        isScrollable: true,
+                        indicatorColor: AppColorThemeBraunBlack.of(context)
+                            .lightBraunColor100,
+                        labelColor: AppColorThemeBraunBlack.of(context)
+                            .lightBraunColor100,
+                        tabs: focusCheck
+                            ? []
+                            : const [
+                                Text('All Library'),
+                                Text('In reading'),
+                                Text('Will be read'),
+                                Text('Has been read'),
+                                Text('Likes')
+                              ],
+                      ),
+                    ),
+                    body: focusCheck
+                        ? SizedBox(
+                            height:
+                                MediaQuery.of(context).size.height - 22.0 * 2,
+                            child: ListView.builder(
+                                itemCount: stateBooks.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final Book book = stateBooks[index];
+                                  final String title = book.title;
+                                  final String authorName = book.authorName;
+                                  final String urlImage = book.photo;
+                                  final List<String> languages = book.language;
+                                  return BlocProvider(
+                                    create: (context) => BookLibraryCubit(
+                                        id: book.id,
+                                        bookLibraryAddOrDelete:
+                                            BookLibraryAddOrDelete(),
+                                        booksRepository:
+                                            BooksRepository.instance),
+                                    child: BlocBuilder<BookLibraryCubit, bool>(
+                                      builder: (context, state) {
+                                        return bookWidget(
+                                            urlImage: urlImage,
+                                            title: title,
+                                            authorName: authorName,
+                                            languages: languages,
+                                            contextBook: context,
+                                            stateCheck: state,
+                                            book: book);
+                                      },
+                                    ),
+                                  );
+                                }),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(17.0),
+                            child: GestureDetector(
+                                onTap: () => FocusScope.of(context).unfocus(),
+                                child: TabBarView(
+                                  children: [
+                                    /// All Library
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height -
+                                              22.0 * 2,
+                                      child: ListView.builder(
+                                          itemCount: state.books.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            final Book book =
+                                                state.books[index];
+                                            final String title = book.title;
+                                            final String authorName =
+                                                book.authorName;
+                                            final String urlImage = book.photo;
+                                            final List<String> languages =
+                                                book.language;
+                                            return BlocProvider(
+                                              create: (context) =>
+                                                  BookLibraryCubit(
+                                                      id: book.id,
+                                                      bookLibraryAddOrDelete:
+                                                          BookLibraryAddOrDelete(),
+                                                      booksRepository:
+                                                          BooksRepository
+                                                              .instance),
+                                              child: BlocBuilder<
+                                                  BookLibraryCubit, bool>(
+                                                builder: (context, state) {
+                                                  return bookWidget(
+                                                      urlImage: urlImage,
+                                                      title: title,
+                                                      authorName: authorName,
+                                                      languages: languages,
+                                                      contextBook: context,
+                                                      stateCheck: state,
+                                                      book: book);
+                                                },
+                                              ),
+                                            );
+                                          }),
+                                    ),
 
-                                      /// In Reading
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height -
-                                                22.0 * 2,
-                                        child: ListView.builder(
-                                            itemCount: state.books
+                                    /// In Reading
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height -
+                                              22.0 * 2,
+                                      child: ListView.builder(
+                                          itemCount: state.books
+                                              .where((book) =>
+                                                  BooksRepository.instance
+                                                              .booksInLibraryMap![
+                                                          book.id.toString()]
+                                                      ['status'] ==
+                                                  'In reading')
+                                              .length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            final books = state.books
                                                 .where((book) =>
                                                     BooksRepository.instance
                                                                 .booksInLibraryMap![
                                                             book.id.toString()]
                                                         ['status'] ==
                                                     'In reading')
-                                                .length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              final books = state.books
-                                                  .where((book) =>
-                                                      BooksRepository.instance
-                                                                  .booksInLibraryMap![
-                                                              book.id
-                                                                  .toString()]
-                                                          ['status'] ==
-                                                      'In reading')
-                                                  .toList();
-                                              final Book book = books[index];
-                                              final String title = book.title;
-                                              final String authorName =
-                                                  book.authorName;
-                                              final String urlImage =
-                                                  book.photo;
-                                              final List<String> languages =
-                                                  book.language;
-                                              return BlocProvider(
-                                                create: (context) =>
-                                                    BookLibraryCubit(
-                                                        id: book.id,
-                                                        bookLibraryAddOrDelete:
-                                                            BookLibraryAddOrDelete(),
-                                                        booksRepository:
-                                                            BooksRepository
-                                                                .instance),
-                                                child: BlocBuilder<
-                                                    BookLibraryCubit, bool>(
-                                                  builder: (context, state) {
-                                                    return bookWidget(
-                                                        urlImage: urlImage,
-                                                        title: title,
-                                                        authorName: authorName,
-                                                        languages: languages,
-                                                        contextBook: context,
-                                                        stateCheck: state,
-                                                        book: book);
-                                                  },
-                                                ),
-                                              );
-                                            }),
-                                      ),
+                                                .toList();
+                                            final Book book = books[index];
+                                            final String title = book.title;
+                                            final String authorName =
+                                                book.authorName;
+                                            final String urlImage = book.photo;
+                                            final List<String> languages =
+                                                book.language;
+                                            return BlocProvider(
+                                              create: (context) =>
+                                                  BookLibraryCubit(
+                                                      id: book.id,
+                                                      bookLibraryAddOrDelete:
+                                                          BookLibraryAddOrDelete(),
+                                                      booksRepository:
+                                                          BooksRepository
+                                                              .instance),
+                                              child: BlocBuilder<
+                                                  BookLibraryCubit, bool>(
+                                                builder: (context, state) {
+                                                  return bookWidget(
+                                                      urlImage: urlImage,
+                                                      title: title,
+                                                      authorName: authorName,
+                                                      languages: languages,
+                                                      contextBook: context,
+                                                      stateCheck: state,
+                                                      book: book);
+                                                },
+                                              ),
+                                            );
+                                          }),
+                                    ),
 
-                                      /// Will be reading books
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height -
-                                                22.0 * 2,
-                                        child: ListView.builder(
-                                            itemCount: state.books
+                                    /// Will be reading books
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height -
+                                              22.0 * 2,
+                                      child: ListView.builder(
+                                          itemCount: state.books
+                                              .where((book) =>
+                                                  BooksRepository.instance
+                                                              .booksInLibraryMap![
+                                                          book.id.toString()]
+                                                      ['status'] ==
+                                                  'Will be read')
+                                              .length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            final books = state.books
                                                 .where((book) =>
                                                     BooksRepository.instance
                                                                 .booksInLibraryMap![
                                                             book.id.toString()]
                                                         ['status'] ==
                                                     'Will be read')
-                                                .length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              final books = state.books
-                                                  .where((book) =>
-                                                      BooksRepository.instance
-                                                                  .booksInLibraryMap![
-                                                              book.id
-                                                                  .toString()]
-                                                          ['status'] ==
-                                                      'Will be read')
-                                                  .toList();
-                                              final Book book = books[index];
-                                              final String title = book.title;
-                                              final String authorName =
-                                                  book.authorName;
-                                              final String urlImage =
-                                                  book.photo;
-                                              final List<String> languages =
-                                                  book.language;
-                                              return BlocProvider(
-                                                create: (context) =>
-                                                    BookLibraryCubit(
-                                                        id: book.id,
-                                                        bookLibraryAddOrDelete:
-                                                            BookLibraryAddOrDelete(),
-                                                        booksRepository:
-                                                            BooksRepository
-                                                                .instance),
-                                                child: BlocBuilder<
-                                                    BookLibraryCubit, bool>(
-                                                  builder: (context, state) {
-                                                    return bookWidget(
-                                                        urlImage: urlImage,
-                                                        title: title,
-                                                        authorName: authorName,
-                                                        languages: languages,
-                                                        contextBook: context,
-                                                        stateCheck: state,
-                                                        book: book);
-                                                  },
-                                                ),
-                                              );
-                                            }),
-                                      ),
+                                                .toList();
+                                            final Book book = books[index];
+                                            final String title = book.title;
+                                            final String authorName =
+                                                book.authorName;
+                                            final String urlImage = book.photo;
+                                            final List<String> languages =
+                                                book.language;
+                                            return BlocProvider(
+                                              create: (context) =>
+                                                  BookLibraryCubit(
+                                                      id: book.id,
+                                                      bookLibraryAddOrDelete:
+                                                          BookLibraryAddOrDelete(),
+                                                      booksRepository:
+                                                          BooksRepository
+                                                              .instance),
+                                              child: BlocBuilder<
+                                                  BookLibraryCubit, bool>(
+                                                builder: (context, state) {
+                                                  return bookWidget(
+                                                      urlImage: urlImage,
+                                                      title: title,
+                                                      authorName: authorName,
+                                                      languages: languages,
+                                                      contextBook: context,
+                                                      stateCheck: state,
+                                                      book: book);
+                                                },
+                                              ),
+                                            );
+                                          }),
+                                    ),
 
-                                      /// Has been reading books
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height -
-                                                22.0 * 2,
-                                        child: ListView.builder(
-                                            itemCount: state.books
+                                    /// Has been reading books
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height -
+                                              22.0 * 2,
+                                      child: ListView.builder(
+                                          itemCount: state.books
+                                              .where((book) =>
+                                                  BooksRepository.instance
+                                                              .booksInLibraryMap![
+                                                          book.id.toString()]
+                                                      ['status'] ==
+                                                  'Has been reading')
+                                              .length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            final books = state.books
                                                 .where((book) =>
                                                     BooksRepository.instance
                                                                 .booksInLibraryMap![
                                                             book.id.toString()]
                                                         ['status'] ==
                                                     'Has been reading')
-                                                .length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              final books = state.books
-                                                  .where((book) =>
-                                                      BooksRepository.instance
-                                                                  .booksInLibraryMap![
-                                                              book.id
-                                                                  .toString()]
-                                                          ['status'] ==
-                                                      'Has been reading')
-                                                  .toList();
-                                              final Book book = books[index];
-                                              final String title = book.title;
-                                              final String authorName =
-                                                  book.authorName;
-                                              final String urlImage =
-                                                  book.photo;
-                                              final List<String> languages =
-                                                  book.language;
-                                              return BlocProvider(
-                                                create: (context) =>
-                                                    BookLibraryCubit(
-                                                        id: book.id,
-                                                        bookLibraryAddOrDelete:
-                                                            BookLibraryAddOrDelete(),
-                                                        booksRepository:
-                                                            BooksRepository
-                                                                .instance),
-                                                child: BlocBuilder<
-                                                    BookLibraryCubit, bool>(
-                                                  builder: (context, state) {
-                                                    return bookWidget(
-                                                        urlImage: urlImage,
-                                                        title: title,
-                                                        authorName: authorName,
-                                                        languages: languages,
-                                                        contextBook: context,
-                                                        stateCheck: state,
-                                                        book: book);
-                                                  },
-                                                ),
-                                              );
-                                            }),
-                                      ),
+                                                .toList();
+                                            final Book book = books[index];
+                                            final String title = book.title;
+                                            final String authorName =
+                                                book.authorName;
+                                            final String urlImage = book.photo;
+                                            final List<String> languages =
+                                                book.language;
+                                            return BlocProvider(
+                                              create: (context) =>
+                                                  BookLibraryCubit(
+                                                      id: book.id,
+                                                      bookLibraryAddOrDelete:
+                                                          BookLibraryAddOrDelete(),
+                                                      booksRepository:
+                                                          BooksRepository
+                                                              .instance),
+                                              child: BlocBuilder<
+                                                  BookLibraryCubit, bool>(
+                                                builder: (context, state) {
+                                                  return bookWidget(
+                                                      urlImage: urlImage,
+                                                      title: title,
+                                                      authorName: authorName,
+                                                      languages: languages,
+                                                      contextBook: context,
+                                                      stateCheck: state,
+                                                      book: book);
+                                                },
+                                              ),
+                                            );
+                                          }),
+                                    ),
 
-                                      /// Liked books
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height -
-                                                22.0 * 2,
-                                        child: ListView.builder(
-                                            itemCount: state.books
+                                    /// Liked books
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height -
+                                              22.0 * 2,
+                                      child: ListView.builder(
+                                          itemCount: state.books
+                                              .where((book) =>
+                                                  BooksRepository.instance
+                                                              .booksInLibraryMap![
+                                                          book.id.toString()]
+                                                      ['status'] ==
+                                                  'Likes')
+                                              .length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            final books = state.books
                                                 .where((book) =>
                                                     BooksRepository.instance
                                                                 .booksInLibraryMap![
                                                             book.id.toString()]
                                                         ['status'] ==
                                                     'Likes')
-                                                .length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              final books = state.books
-                                                  .where((book) =>
-                                                      BooksRepository.instance
-                                                                  .booksInLibraryMap![
-                                                              book.id
-                                                                  .toString()]
-                                                          ['status'] ==
-                                                      'Likes')
-                                                  .toList();
-                                              final Book book = books[index];
-                                              final String title = book.title;
-                                              final String authorName =
-                                                  book.authorName;
-                                              final String urlImage =
-                                                  book.photo;
-                                              final List<String> languages =
-                                                  book.language;
-                                              return BlocProvider(
-                                                create: (context) =>
-                                                    BookLibraryCubit(
-                                                        id: book.id,
-                                                        bookLibraryAddOrDelete:
-                                                            BookLibraryAddOrDelete(),
-                                                        booksRepository:
-                                                            BooksRepository
-                                                                .instance),
-                                                child: BlocBuilder<
-                                                    BookLibraryCubit, bool>(
-                                                  builder: (context, state) {
-                                                    return bookWidget(
-                                                        urlImage: urlImage,
-                                                        title: title,
-                                                        authorName: authorName,
-                                                        languages: languages,
-                                                        contextBook: context,
-                                                        stateCheck: state,
-                                                        book: book);
-                                                  },
-                                                ),
-                                              );
-                                            }),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                      backgroundColor: AppColorThemeBraunBlack.of(context)
-                          .whiteColorBackground),
-                ),
-              );
-            },
-          );
-        },
-      ),
+                                                .toList();
+                                            final Book book = books[index];
+                                            final String title = book.title;
+                                            final String authorName =
+                                                book.authorName;
+                                            final String urlImage = book.photo;
+                                            final List<String> languages =
+                                                book.language;
+                                            return BlocProvider(
+                                              create: (context) =>
+                                                  BookLibraryCubit(
+                                                      id: book.id,
+                                                      bookLibraryAddOrDelete:
+                                                          BookLibraryAddOrDelete(),
+                                                      booksRepository:
+                                                          BooksRepository
+                                                              .instance),
+                                              child: BlocBuilder<
+                                                  BookLibraryCubit, bool>(
+                                                builder: (context, state) {
+                                                  return bookWidget(
+                                                      urlImage: urlImage,
+                                                      title: title,
+                                                      authorName: authorName,
+                                                      languages: languages,
+                                                      contextBook: context,
+                                                      stateCheck: state,
+                                                      book: book);
+                                                },
+                                              ),
+                                            );
+                                          }),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                    backgroundColor: AppColorThemeBraunBlack.of(context)
+                        .whiteColorBackground),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -438,11 +422,7 @@ class _LibraryPageState extends State<LibraryPage> {
                 MaterialPageRoute(
                   builder: (context) =>
                       BookDetailPage(book: book, key: UniqueKey()),
-                )).then((_) {
-              setState(() {
-                print('check');
-              });
-            });
+                ));
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
@@ -542,14 +522,5 @@ class _LibraryPageState extends State<LibraryPage> {
         );
       },
     );
-  }
-}
-
-class SearchPageInLibrary extends StatelessWidget {
-  const SearchPageInLibrary({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }
