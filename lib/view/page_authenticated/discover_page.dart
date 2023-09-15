@@ -47,9 +47,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                         width: 20,
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(10.0),
+                                          BorderRadius.circular(10.0),
                                           color: AppColorThemeBraunBlack.of(
-                                                  context)
+                                              context)
                                               .lightBraunColor100,
                                         ),
                                         child: Center(
@@ -95,9 +95,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                   create: (context) => BookLibraryCubit(
                                       id: book.id,
                                       bookLibraryAddOrDelete:
-                                          BookLibraryAddOrDelete(),
+                                      BookLibraryAddOrDelete(),
                                       booksRepository:
-                                          BooksRepository.instance),
+                                      BooksRepository.instance),
                                   child: BlocBuilder<BookLibraryCubit, bool>(
                                     builder: (context, stateBool) {
                                       return bookWidget(
@@ -117,7 +117,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 ),
               ),
               backgroundColor:
-                  AppColorThemeBraunBlack.of(context).whiteColorBackground,
+              AppColorThemeBraunBlack.of(context).whiteColorBackground,
             );
           },
         );
@@ -164,7 +164,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   leading: Radio<FilterMark>(
                     value: FilterMark.title,
                     activeColor:
-                        AppColorThemeBraunBlack.of(context).lightBraunColor100,
+                    AppColorThemeBraunBlack.of(context).lightBraunColor100,
                     groupValue: state.filter,
                     onChanged: (FilterMark? value) {
                       context.read<FilterMarkCubit>().setFilterToTitle();
@@ -195,7 +195,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   leading: Radio<FilterMark>(
                     value: FilterMark.author,
                     activeColor:
-                        AppColorThemeBraunBlack.of(context).lightBraunColor100,
+                    AppColorThemeBraunBlack.of(context).lightBraunColor100,
                     groupValue: state.filter,
                     onChanged: (FilterMark? value) {
                       context.read<FilterMarkCubit>().setFilterToAuthor();
@@ -211,12 +211,12 @@ class _DiscoverPageState extends State<DiscoverPage> {
 
   Widget bookWidget(
       {required String urlImage,
-      required String title,
-      required String authorName,
-      required List<String> languages,
-      required BuildContext contextBook,
-      required bool stateCheck,
-      required Book book}) {
+        required String title,
+        required String authorName,
+        required List<String> languages,
+        required BuildContext contextBook,
+        required bool stateCheck,
+        required Book book}) {
     return BlocBuilder<IsLoadCubit, bool>(
       builder: (context, state) {
         return GestureDetector(
@@ -232,7 +232,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
             padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Card(
                   shape: RoundedRectangleBorder(
@@ -245,9 +245,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
                         if (!state)
                           Center(
                               child: CircularProgressIndicator(
-                            color: AppColorThemeBraunBlack.of(context)
-                                .lightBraunColor100,
-                          )),
+                                color: AppColorThemeBraunBlack.of(context)
+                                    .lightBraunColor100,
+                              )),
                         SizedBox(
                           height: 170,
                           width: 110,
@@ -265,10 +265,10 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                     color: AppColorThemeBraunBlack.of(context)
                                         .lightBraunColor100,
                                     value: loadingProgress.expectedTotalBytes !=
-                                            null
+                                        null
                                         ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
+                                        .cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
                                         : null,
                                   ),
                                 );
@@ -289,7 +289,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 ),
                 Container(
                   constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width / 2.3),
+                      maxWidth: MediaQuery.of(context).size.width / 2),
                   padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 5.0),
                   // width: 160,
                   child: Column(
@@ -319,7 +319,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     ],
                   ),
                 ),
-                MyButton(contextBook: contextBook, stateCheck: stateCheck)
               ],
             ),
           ),

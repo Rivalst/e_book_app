@@ -15,9 +15,9 @@ class BookLibraryGetBloc
 
   BookLibraryGetBloc({required this.booksList, required this.booksMap})
       : super(BookLibraryGetState.allLibrary(
-            booksList: booksList
-                .where((book) => booksMap![book.id.toString()] != null)
-                .toList())) {
+      booksList: booksList
+          .where((book) => booksMap![book.id.toString()] != null)
+          .toList())) {
     on(_changer);
   }
 
