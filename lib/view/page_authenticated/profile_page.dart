@@ -222,7 +222,7 @@ class UserPage extends StatelessWidget {
                   ),
                   const Divider(),
                   InkResponse(
-                    onTap: () => print('hello'),
+                    onTap: () => print(''),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
                       child: Row(
