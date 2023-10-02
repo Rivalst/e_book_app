@@ -13,9 +13,9 @@ final class BookLibraryGetState extends Equatable {
         _status = status;
 
   factory BookLibraryGetState.allLibrary(
-      {required List<Book> booksList, LibraryMark? statusMark}) {
+      {required List<Book> booksListSet, LibraryMark? statusMark}) {
     return BookLibraryGetState._(
-        books: booksList, status: statusMark ?? LibraryMark.allLibrary);
+        books: booksListSet, status: statusMark ?? LibraryMark.allLibrary);
   }
 
 

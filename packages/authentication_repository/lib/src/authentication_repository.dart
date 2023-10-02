@@ -201,7 +201,7 @@ class AuthenticationRepository {
           'name': name,
           'email': email,
           'uid': userUID,
-          'books': <String, dynamic>{
+          'booksData': <String, dynamic>{
 
           },
         });
@@ -275,7 +275,7 @@ extension on firebase_auth.User {
       id: uid,
       email: email,
       name: data?['name'] ?? displayName,
-      books: data?['books'] ?? null,
+      books: data?['booksData'] ?? null,
       photo: photoURL,
     );
   }

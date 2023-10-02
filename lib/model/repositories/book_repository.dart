@@ -17,7 +17,7 @@ class BooksDataGetFailure implements Exception {
 
 class BooksRepository {
   List<Book> books = [];
-  Map<String, dynamic>? booksInLibraryMap = {};
+  Map<String, dynamic> booksInLibraryMap = {};
 
   static final BooksRepository _instance =
       BooksRepository._privateConstructor();
@@ -31,11 +31,15 @@ class BooksRepository {
 
   Future<void> fetchBooksData() async {
     try {
-      final mapOfBooks = await _firebaseFirestore.collection('books').get();
+      final mapOfBooks = await _firebaseFirestore.collection('booksData').get();
       for (var doc in mapOfBooks.docs) {
         final bookData = doc.data();
         final book = Book.fromJson(bookData);
-        books.add(book);
+        bool containsBook =
+            books.any((existingBook) => existingBook.id == book.id);
+        if (!containsBook) {
+          books.add(book);
+        }
       }
     } on FirebaseException catch (e) {
       throw BooksDataGetFailure.fromCode(e.code, e.message);
@@ -48,9 +52,13 @@ class BooksRepository {
     try {
       final user = _firabaseAuth.currentUser;
       final userUID = user?.uid;
-      final dataUser =
-          await _firebaseFirestore.collection('users').doc(userUID).get();
-      booksInLibraryMap = dataUser.data()!['books'];
+      if (userUID != null) {
+        final dataUser =
+            await _firebaseFirestore.collection('users').doc(userUID).get();
+        booksInLibraryMap = dataUser.data()!['booksData'];
+      } else {
+        booksInLibraryMap = {};
+      }
     } on FirebaseException catch (e) {
       throw BooksDataGetFailure.fromCode(e.code, e.message);
     } catch (_) {

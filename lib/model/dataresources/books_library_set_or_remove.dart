@@ -34,14 +34,14 @@ class BookLibraryAddOrDelete extends BookLibraryController {
       final userDoc =
           await _firebaseFirestore.collection('users').doc(userUID).get();
 
-      final books = userDoc.data()?['books'] ?? <String, dynamic>{};
+      final books = userDoc.data()?['booksData'] ?? <String, dynamic>{};
 
       books[id.toString()] = {'status': status ?? ''};
 
       await _firebaseFirestore
           .collection('users')
           .doc(userUID)
-          .update({'books': books});
+          .update({'booksData': books});
     } catch (e) {
       print('Error: $e');
     }
@@ -57,12 +57,12 @@ class BookLibraryAddOrDelete extends BookLibraryController {
           await _firebaseFirestore.collection('users').doc(userUID).get();
 
       final Map<String, dynamic> books =
-          Map<String, dynamic>.from(dataUser['books']);
+          Map<String, dynamic>.from(dataUser['booksData']);
 
       books.remove(id.toString());
 
       await _firebaseFirestore.collection('users').doc(userUID).update({
-        'books': books,
+        'booksData': books,
       });
     } catch (e) {
       print('Error: $e');

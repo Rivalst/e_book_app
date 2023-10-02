@@ -1,3 +1,4 @@
+import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/view/page_authenticated/discover_page.dart';
 import 'package:e_book_app/view/page_authenticated/home_page.dart';
 import 'package:e_book_app/view/page_authenticated/library_page.dart';
@@ -9,8 +10,10 @@ import 'package:flutter/material.dart';
 import '../../controller/bloc/app_bloc/app_bloc.dart';
 
 /// This is a rout for [authenticated] or [unauthenticated] users.
-List<Page<dynamic>> onGenerateAppViewPages(AppStatus state,
-    List<Page<dynamic>> pages,) {
+List<Page<dynamic>> onGenerateAppViewPages(
+  AppStatus state,
+  List<Page<dynamic>> pages,
+) {
   switch (state) {
     case AppStatus.authenticated:
       return [AuthenticatedPage.page()];
@@ -21,8 +24,7 @@ List<Page<dynamic>> onGenerateAppViewPages(AppStatus state,
   }
 }
 
-Widget onGenerateBottomBarItemPages(
-    {required int index}) {
+Widget onGenerateBottomBarItemPages({required int index}) {
   switch (index) {
     case 0:
       return const HomePage();

@@ -8,6 +8,7 @@ import 'package:e_book_app/view/utils_widgets/button_bookmark_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class BookDetailPage extends StatefulWidget {
   const BookDetailPage({required this.book, Key? key}) : super(key: key);
@@ -18,6 +19,27 @@ class BookDetailPage extends StatefulWidget {
 }
 
 class _BookDetailPageState extends State<BookDetailPage> {
+  // final controller = WebViewController()
+  //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  //   // ..setBackgroundColor(const Color(0x00000000))
+  //   ..setNavigationDelegate(
+  //     NavigationDelegate(
+  //       onProgress: (int progress) {
+  //         // Update loading bar.
+  //       },
+  //       onPageStarted: (String url) {},
+  //       onPageFinished: (String url) {},
+  //       onWebResourceError: (WebResourceError error) {},
+  //       onNavigationRequest: (NavigationRequest request) {
+  //         if (request.url.startsWith('https://www.youtube.com/')) {
+  //           return NavigationDecision.prevent;
+  //         }
+  //         return NavigationDecision.navigate;
+  //       },
+  //     ),
+  //   )
+  //   ..loadRequest(Uri.parse('https://flutter.dev'));
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -233,6 +255,48 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             ),
                           ),
                         ),
+                        Positioned(
+                            top: 380,
+                            left: (MediaQuery.of(context).size.width - 350) / 2,
+                            child: SizedBox(
+                              height: 45,
+                              width: 350,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            WebViewApp(url: widget.book.text)),
+                                  );
+                                  // widget.book.text.isNotEmpty
+                                  //     ? Navigator.push(
+                                  //         context,
+                                  //         MaterialPageRoute(
+                                  //           builder: (context) => WebViewApp(
+                                  //               url:
+                                  //                   'https://www.gutenberg.org/cache/epub/1513/pg1513-images.html'),
+                                  //         ),
+                                  //       )
+                                  //     : null;
+                                },
+                                style: buttonStyle(),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.sticky_note_2_outlined),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      'Read',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17.0,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ))
                       ],
                     )
                   ],
@@ -247,10 +311,24 @@ class _BookDetailPageState extends State<BookDetailPage> {
     );
   }
 
+  ButtonStyle buttonStyle() {
+    return ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+            AppColorThemeBraunBlack.of(context).lightBraunColor100),
+        foregroundColor: MaterialStateProperty.all<Color>(
+            AppColorThemeBraunBlack.of(context).lightBraunColor10),
+        overlayColor: MaterialStateProperty.all<Color>(
+            AppColorThemeBraunBlack.of(context).lightBraunColor80),
+        shadowColor: MaterialStateProperty.all<Color>(
+            AppColorThemeBraunBlack.of(context).lightBraunColor100),
+        surfaceTintColor: MaterialStateProperty.all<Color>(
+            AppColorThemeBraunBlack.of(context).lightBraunColor100));
+  }
+
   Future<dynamic> statusChanger({required BuildContext contextBook}) {
-    String bookStatus = BooksRepository.instance.booksInLibraryMap!
+    String bookStatus = BooksRepository.instance.booksInLibraryMap
             .containsKey(widget.book.id.toString())
-        ? BooksRepository.instance.booksInLibraryMap![widget.book.id.toString()]
+        ? BooksRepository.instance.booksInLibraryMap[widget.book.id.toString()]
             ['status']
         : '';
     return showDialog(
@@ -329,5 +407,98 @@ class _BookDetailPageState extends State<BookDetailPage> {
             ],
           );
         });
+  }
+}
+
+class WebViewApp extends StatefulWidget {
+  final String url;
+
+  const WebViewApp({required this.url, super.key});
+
+  @override
+  State<WebViewApp> createState() => _WebViewAppState();
+}
+
+class _WebViewAppState extends State<WebViewApp> {
+  late final WebViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = WebViewController()
+      ..loadRequest(
+        Uri.parse(widget.url),
+      );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter WebView'),
+      ),
+      body: WebViewStack(controller: controller),
+    );
+  }
+}
+
+class WebViewStack extends StatefulWidget {
+  const WebViewStack({required this.controller, super.key}); // MODIFY
+
+  final WebViewController controller;
+
+  @override
+  State<WebViewStack> createState() => _WebViewStackState();
+}
+
+class _WebViewStackState extends State<WebViewStack> {
+  var loadingPercentage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (url) {
+            setState(() {
+              loadingPercentage = 0;
+            });
+          },
+          onProgress: (progress) {
+            setState(() {
+              loadingPercentage = progress;
+            });
+          },
+          onPageFinished: (url) {
+            setState(() {
+              loadingPercentage = 100;
+            });
+          },
+        ),
+      )
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..addJavaScriptChannel(
+        'SnackBar',
+        onMessageReceived: (message) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(message.message)));
+        },
+      );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        WebViewWidget(
+          controller: widget.controller,
+        ),
+        if (loadingPercentage < 100)
+          LinearProgressIndicator(
+            value: loadingPercentage / 100.0,
+          ),
+      ],
+    );
   }
 }

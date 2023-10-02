@@ -15,9 +15,9 @@ class BookLibraryGetBloc
 
   BookLibraryGetBloc({required this.booksList, required this.booksMap})
       : super(BookLibraryGetState.allLibrary(
-      booksList: booksList
-          .where((book) => booksMap![book.id.toString()] != null)
-          .toList())) {
+            booksListSet: booksList
+                .where((book) => booksMap![book.id.toString()] != null)
+                .toList())) {
     on(_changer);
   }
 
@@ -25,8 +25,8 @@ class BookLibraryGetBloc
     final booksListNew = BooksRepository.instance.books;
     final booksMapNew = BooksRepository.instance.booksInLibraryMap;
     emit(BookLibraryGetState.allLibrary(
-        booksList: booksListNew
-            .where((book) => booksMapNew![book.id.toString()] != null)
+        booksListSet: booksListNew
+            .where((book) => booksMapNew[book.id.toString()] != null)
             .toList()));
   }
 }

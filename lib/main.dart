@@ -1,8 +1,8 @@
-import 'package:e_book_app/model/repositories/book_repository.dart';
 import 'package:e_book_app/config/app.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,14 +10,10 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
 
-  final booksParser = BooksRepository.instance;
-  await booksParser.fetchBooksData();
-  await booksParser.fetchBookLibraryData();
+  WebViewPlatform.instance;
 
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;
 
-  runApp(MyApp(
-    authenticationRepository: authenticationRepository,
-  ));
+  runApp(MyApp(authenticationRepository: authenticationRepository));
 }

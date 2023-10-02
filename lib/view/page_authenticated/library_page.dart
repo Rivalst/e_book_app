@@ -46,6 +46,8 @@ class _LibraryPageState extends State<LibraryPage> {
       builder: (context, state) {
         return BlocBuilder<BookDiscoverLibraryCubit, List<Book>>(
           builder: (context, stateBooks) {
+            print(BooksRepository.instance.booksInLibraryMap);
+            print(state);
             return GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: DefaultTabController(
@@ -145,7 +147,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                           itemCount: state.books
                                               .where((book) =>
                                                   BooksRepository.instance
-                                                              .booksInLibraryMap![
+                                                              .booksInLibraryMap[
                                                           book.id.toString()]
                                                       ['status'] ==
                                                   'In reading')
@@ -155,7 +157,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                             final books = state.books
                                                 .where((book) =>
                                                     BooksRepository.instance
-                                                                .booksInLibraryMap![
+                                                                .booksInLibraryMap[
                                                             book.id.toString()]
                                                         ['status'] ==
                                                     'In reading')
@@ -185,7 +187,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                           itemCount: state.books
                                               .where((book) =>
                                                   BooksRepository.instance
-                                                              .booksInLibraryMap![
+                                                              .booksInLibraryMap[
                                                           book.id.toString()]
                                                       ['status'] ==
                                                   'Will be read')
@@ -195,7 +197,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                             final books = state.books
                                                 .where((book) =>
                                                     BooksRepository.instance
-                                                                .booksInLibraryMap![
+                                                                .booksInLibraryMap[
                                                             book.id.toString()]
                                                         ['status'] ==
                                                     'Will be read')
@@ -225,7 +227,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                           itemCount: state.books
                                               .where((book) =>
                                                   BooksRepository.instance
-                                                              .booksInLibraryMap![
+                                                              .booksInLibraryMap[
                                                           book.id.toString()]
                                                       ['status'] ==
                                                   'Has been reading')
@@ -235,7 +237,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                             final books = state.books
                                                 .where((book) =>
                                                     BooksRepository.instance
-                                                                .booksInLibraryMap![
+                                                                .booksInLibraryMap[
                                                             book.id.toString()]
                                                         ['status'] ==
                                                     'Has been reading')
@@ -265,7 +267,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                           itemCount: state.books
                                               .where((book) =>
                                                   BooksRepository.instance
-                                                              .booksInLibraryMap![
+                                                              .booksInLibraryMap[
                                                           book.id.toString()]
                                                       ['status'] ==
                                                   'Likes')
@@ -275,7 +277,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                             final books = state.books
                                                 .where((book) =>
                                                     BooksRepository.instance
-                                                                .booksInLibraryMap![
+                                                                .booksInLibraryMap[
                                                             book.id.toString()]
                                                         ['status'] ==
                                                     'Likes')
