@@ -54,7 +54,7 @@ class SingUpForm extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-        child: Column(
+        child: ListView(
           children: <Widget>[
             const Text(
               'Sign Up',
@@ -78,11 +78,12 @@ class SingUpForm extends StatelessWidget {
             _ConfirmPasswordInput(),
             const SizedBox(height: 5.0),
             Expanded(
-                child: Column(
-              children: [
-                _SignUpButton(),
-              ],
-            )),
+              child: Column(
+                children: [
+                  _SignUpButton(),
+                ],
+              ),
+            ),
           ],
         ),
       ),

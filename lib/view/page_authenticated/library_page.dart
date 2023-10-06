@@ -46,8 +46,6 @@ class _LibraryPageState extends State<LibraryPage> {
       builder: (context, state) {
         return BlocBuilder<BookDiscoverLibraryCubit, List<Book>>(
           builder: (context, stateBooks) {
-            print(BooksRepository.instance.booksInLibraryMap);
-            print(state);
             return GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: DefaultTabController(

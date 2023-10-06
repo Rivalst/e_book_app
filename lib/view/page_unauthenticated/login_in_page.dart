@@ -50,7 +50,7 @@ class LoginForm extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-          child: Column(
+          child: ListView(
             children: [
               const Text(
                 'Log in',

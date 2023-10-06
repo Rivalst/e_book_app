@@ -19,27 +19,6 @@ class BookDetailPage extends StatefulWidget {
 }
 
 class _BookDetailPageState extends State<BookDetailPage> {
-  // final controller = WebViewController()
-  //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-  //   // ..setBackgroundColor(const Color(0x00000000))
-  //   ..setNavigationDelegate(
-  //     NavigationDelegate(
-  //       onProgress: (int progress) {
-  //         // Update loading bar.
-  //       },
-  //       onPageStarted: (String url) {},
-  //       onPageFinished: (String url) {},
-  //       onWebResourceError: (WebResourceError error) {},
-  //       onNavigationRequest: (NavigationRequest request) {
-  //         if (request.url.startsWith('https://www.youtube.com/')) {
-  //           return NavigationDecision.prevent;
-  //         }
-  //         return NavigationDecision.navigate;
-  //       },
-  //     ),
-  //   )
-  //   ..loadRequest(Uri.parse('https://flutter.dev'));
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -269,16 +248,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                         builder: (context) =>
                                             WebViewApp(url: widget.book.text)),
                                   );
-                                  // widget.book.text.isNotEmpty
-                                  //     ? Navigator.push(
-                                  //         context,
-                                  //         MaterialPageRoute(
-                                  //           builder: (context) => WebViewApp(
-                                  //               url:
-                                  //                   'https://www.gutenberg.org/cache/epub/1513/pg1513-images.html'),
-                                  //         ),
-                                  //       )
-                                  //     : null;
                                 },
                                 style: buttonStyle(),
                                 child: const Row(

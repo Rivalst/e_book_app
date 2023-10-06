@@ -17,8 +17,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
+  flutter_launcher_icons: ^0.13.1
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.3.3
   flutter_svg: ^2.0.7
   font_awesome_flutter: ^10.1.0
   form_inputs:
@@ -42,15 +44,27 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
 
+flutter_native_splash:
+  image: "assets/icon_e_book_app_for_splash.png"
+  color: "#ffffff"
+  android_disable_fullscreen: true
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon_ebook.png"
+  image_path_android: "assets/icon_ebook.png"
+  adaptive_icon_background: "assets/icon_ebook.png"
+  adaptive_icon_foreground: "assets/icon_ebook.png"
+  min_sdk_android: 19 # android min sdk min:16, default 21
 
 flutter:
-
-
   uses-material-design: true
   generate: true
   assets:
     - assets/google_logo.svg
     - assets/user_profile_photo.png
+    - assets/on_board_page.png
 
 dependency_overrides:
   bloc: ^8.1.0

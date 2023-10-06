@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({Key? key}) : super(key: key);
 
-  static Page<void> page() =>
-      const MaterialPage<void>(child: OnBoardingPage());
+  static Page<void> page() => const MaterialPage<void>(child: OnBoardingPage());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            // const Placeholder(),
+            Image.asset('assets/on_board_page.png'),
             Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.bottomCenter,
@@ -42,7 +42,8 @@ class OnBoardingPage extends StatelessWidget {
                         const SizedBox(
                           width: 5.0,
                         ),
-                        Icon(Icons.back_hand, color: Colors.amberAccent[400])
+                        Icon(Icons.back_hand,
+                            color: Colors.amberAccent[400])
                       ],
                     ),
                   ),
@@ -79,14 +80,15 @@ class OnBoardingPage extends StatelessWidget {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 30.0),
+                    padding:
+                        const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 30.0),
                     child: FloatingActionButton(
                       onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const LoginPage())),
-                      backgroundColor:
-                          AppColorThemeBraunBlack.of(context).lightBraunColor10,
+                      backgroundColor: AppColorThemeBraunBlack.of(context)
+                          .lightBraunColor10,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           side: BorderSide(
@@ -108,7 +110,8 @@ class OnBoardingPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: AppColorThemeBraunBlack.of(context).whiteColorBackground,
+      backgroundColor:
+          AppColorThemeBraunBlack.of(context).whiteColorBackground,
     );
   }
 }
