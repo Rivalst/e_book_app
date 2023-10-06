@@ -17,6 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
+  flutter_html: ^3.0.0-beta.2
   flutter_launcher_icons: ^0.13.1
   flutter_localizations:
     sdk: flutter
@@ -65,6 +66,7 @@ flutter:
     - assets/google_logo.svg
     - assets/user_profile_photo.png
     - assets/on_board_page.png
+    - assets/icon_e_book_app_for_splash.png
 
 dependency_overrides:
   bloc: ^8.1.0
